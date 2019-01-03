@@ -4,8 +4,6 @@
 Controller này dùng để sigout khỏi hệ thống open edx
 """
 import xdj
-
-
 @xdj.Controller(
     url="signout",
     template="sigout.html"
