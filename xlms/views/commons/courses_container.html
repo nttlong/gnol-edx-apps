@@ -1,0 +1,22 @@
+<div style="min-height:400px">
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="p in data.courses">
+      <table>
+        <tr>
+          <td>
+
+            <img src="${absUrl}{{p.course_image_url}}" style="min-width:120px;max-width:120px">
+          </td>
+          <td>
+            <span>{{p.display_name}}</span>
+            <div class="btn-group">
+              <a href="${appUrl}/course/{{p.key}}" class="btn btn-default">${_//"Detail"}</a>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      {{p}}
+    </li>
+  </ul>
+</div>
