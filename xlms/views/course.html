@@ -45,15 +45,33 @@
 
         scope.$applyAsync();
         scope.data={}
+        scope.cIframe = undefined;
         scope.$root.doSetData=function(x){
+            if(scope.cIframe) {
+                $(scope.cIframe).remove();
+            }
             scope.data=x;
             var iframe = document.createElement('iframe');
+            scope.cIframe = iframe;
             var mask = $("<div class=\"mask\"></div>").appendTo("body");
             iframe.onload = function() {
-                this.style.height =(this.contentWindow.document.body.offsetHeight + 60)+'px';
-                this.style.width ="100%"
+                var x= iframe;
+                //$(iframe.contentDocument.body).css({"border":"solid 4px red"})
+                //iframe.style.height =(iframe.contentDocument.body.offsetHeight + 60)+'px';
+                iframe.style.width ="100%"
                 //alert('myframe is loaded');
                 mask.remove();
+                $(iframe.contentDocument).ready(function(){
+                    $(iframe.contentDocument).find("#course-content").css({
+                        "width":"100%",
+                        "float":"left",
+
+                    });
+                    if ($(iframe.contentDocument).find(".sequence-bottom").length>1){
+                        $($(iframe.contentDocument).find(".sequence-bottom")[0]).remove();
+                    }
+
+                })
             }; // before setting 'src'
             iframe.src = scope.data.student_view_url;
             //iframe.src="http://localhost:8000/courses/course-v1:T+A001+B002/jump_to/block-v1:T+A001+B002+type@problem+block@45d56a33c6104132b0eafb7012967b0d"&ndash;&gt;
@@ -63,49 +81,15 @@
                 "float":"left"
             });
             $(iframe).css({
-                "max-height":($(window).height()-80)+"px"
+                "max-height":($(window).height()-80)+"px",
+                "min-height":($(window).height()-80)+"px",
             })
             $("body").css({
                 "overflow-y":"hidden"
             });
-
             $(iframe).attr("frameBorder","0")
-            //.attr("scrolling","no");
-            $("#lms-contenxt").empty();
+            <!--$("#lms-contenxt").empty();-->
             $(iframe).appendTo("#lms-contenxt");
-
-            //document.body.appendChild(iframe);
-            debugger;
-            /*$.ajax({
-                    url:scope.data.student_view_url,
-                    method:"GET",
-                    success:function(res){
-                        alert("OK");
-                        debugger;
-                        console.log(res);
-                    },
-                    error:function(err){
-                        $("#lms-contenxt").empty();
-                        var x=err.responseText
-                        var hi=x.indexOf("<head")
-                        var hj=x.indexOf("</head>")+"</head>".length;
-
-                        var htmlHead=$(x.substring(hi,hj));
-                        //htmlHead.appendTo("body");
-                        console.log(htmlHead);
-
-                        var i=x.indexOf("<body")
-                        var j=x.indexOf("</body>")
-                        var html=$(x.substring(i,j));
-                        html.find("script").appendTo("body")
-                        html.find("script").remove();
-                        html.appendTo($("#lms-contenxt")[0])
-
-
-                    }
-                    })*/
-
-            //alert(scope.data.student_view_url);
             scope.$applyAsync();
 
 
