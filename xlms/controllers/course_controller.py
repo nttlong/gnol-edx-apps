@@ -1,6 +1,8 @@
-import xdj
-from xdj_apps.xlms.controllers.commons import base_controller
 
+
+import xdj
+
+from xdj_apps.xlms.controllers.commons import base_controller
 
 @xdj.Controller(
     url="course/(?P<course_id>[^/+]+(/|\+)[^/+]+(/|\+)[^/?]+)",

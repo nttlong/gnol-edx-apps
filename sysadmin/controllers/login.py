@@ -1,6 +1,6 @@
+# coding = utf-8
+
 import xdj
-
-
 @xdj.controllers.Controller(
     url="login",
     template="login.html"

@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-Controller này dùng để xem danh sách khóa học
-"""
 import xdj
 
 
@@ -52,7 +47,7 @@ class couserware_couser_controller(xdj.BaseController):
                         fx.created_on = datetime.datetime.now()
                         fx.save()
             item.totalActiveStudent=courseware.models.StudentModule.objects.filter(course_id=item.id).filter(module_type="course").count()
-            """Tính số học viên đang tương tác với khóa học"""
+            """calculate total activates students"""
 
         return ret
     def doDeleteItem(self,sender):
@@ -61,6 +56,5 @@ class couserware_couser_controller(xdj.BaseController):
         import openedx.core.djangoapps.models as md
         modulestorr = md.course_details.modulestore()
         modulestorr.delete_course(course_id,sender.user.id)
-        """Xóa khóa học, người xóa là user đang đăng nhập"""
+        """delete courseware by current user"""
         return {}
-

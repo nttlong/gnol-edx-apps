@@ -1,4 +1,7 @@
+
+
 import xdj
+
 @xdj.Controller(
     url="login",
     template="login.html"
@@ -6,7 +9,7 @@ import xdj
 class LoginController(xdj.BaseController):
     def on_get(self,model):
         return self.render(model)
-    def on_post(selfs,sender):
+    def on_post(self,sender):
         if isinstance(sender, xdj.Model):
             from django.contrib.auth import authenticate, login
             user = authenticate(username=sender.post_data.username[0], password=sender.post_data.password[0])
@@ -20,4 +23,4 @@ class LoginController(xdj.BaseController):
                 sender.isError=True
 
             sender.username = sender.post_data.username[0]
-        return selfs.render(sender)
+        return self.render(sender)

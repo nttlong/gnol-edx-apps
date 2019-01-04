@@ -1,3 +1,5 @@
+
+
 import xdj
 
 
@@ -6,10 +8,11 @@ import xdj
     template="system/email_settings.html"
 )
 class SystemEmailController(xdj.BaseController):
-    def on_get(selfs,sender):
+    def on_get(self,sender):
         if isinstance(sender, xdj.Model):
-            return selfs.render(sender)
-    def on_post(selfs,sender):
+            return self.render(sender)
+
+    def on_post(self, sender):
         if isinstance(sender, xdj.Model):
             pass
-        return selfs.render(sender)
+        return self.render(sender)

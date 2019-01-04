@@ -1,8 +1,8 @@
+#coding = utf-8
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import xdj
-
 
 @xdj.Controller(
     url="system/users",
@@ -18,7 +18,7 @@ class system_user_controller(xdj.BaseController):
         return self.render(sender)
     def doLoadItems(self,sender):
         """
-        Hàm này dùng để load danh sách users có phân trang
+        Get list of users
         :param sender:
         :return:
         """
@@ -56,7 +56,7 @@ class system_user_controller(xdj.BaseController):
     class user(object):
         def doLoadItem(self,sender):
             """
-            Hàm này dùng để lấy thông tin chi tiết của một user
+            Get one user
             :param sender:
             :return:
             """
@@ -65,7 +65,7 @@ class system_user_controller(xdj.BaseController):
             return user
         def doUpdateItem(self,sender):
             """
-            Cập nhật thông tin tài khoản
+            Update account info
             :param sender:
             :return:
             """

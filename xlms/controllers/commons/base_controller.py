@@ -1,3 +1,4 @@
+#coding=utf-8
 import xdj
 from xmodule.tabs import CourseTabList
 from lms.djangoapps.courseware.views.views import CourseTabView
