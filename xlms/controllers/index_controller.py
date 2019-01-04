@@ -5,7 +5,8 @@ import xdj
 
 @xdj.Controller(
     url="",
-    template="index.html"
+    template="index.html",
+    replace_url_=r"^$"
 )
 class IndexControler(xdj.BaseController):
     def __init__(self):
