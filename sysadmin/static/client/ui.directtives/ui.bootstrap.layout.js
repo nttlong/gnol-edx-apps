@@ -55,7 +55,7 @@ function makeUpForm(divRow,a){
             $(eles[i]).appendTo(div[0]);
             div.appendTo(tmpDiv[0]);
         }
-        $(rows[x]).addClass("row")
+        $(rows[x]).addClass("row form-element")
         tmpDiv.contents().appendTo(rows[x]);
 
     }

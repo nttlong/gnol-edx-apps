@@ -11,5 +11,9 @@ div.mask{
 
 }
 .form-element{
-      padding:4px
+    padding-bottom:4px;
+ }
+ .row.form-element {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
  }

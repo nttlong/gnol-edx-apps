@@ -48,12 +48,9 @@
             </tbody>
         </table>
     </div>
-    <div class="container"  ng-if="$root.$history.data().user">
-        <div q-template  url="${appUrl}/system/users/user">
+    <div q-template  url="${appUrl}/system/users/user"  ng-if="$root.$history.data().user">
 
         </div>
-
-    </div>
     <ajax url="${currentUrl}">
             <call data-id="doLoadItems" data-params="{pageSize:50,pageIndex:pageIndex||0}" ng-model="users"/>
             <call data-id="doLoadItems" data-params="{pageSize:50,pageIndex:pageIndex||0,search:txtSearch}" data-function="doLoadItems" ng-model="users"/>
