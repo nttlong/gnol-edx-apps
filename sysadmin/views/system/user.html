@@ -3,27 +3,27 @@
         <div form-template>
             <div>
                 <span>${_>"Username"}</span>
-                <input type="text" ng-model="$parent.user.username" ng-readonly="isUpdate">
+                <input type="text" ng-model="user.username" ng-readonly="isUpdate">
 
                 <span>${_>"Email"}</span>
-                <input type="text" ng-model="$parent.user.email"  ng-readonly="isUpdate">
+                <input type="text" ng-model="user.email"  ng-readonly="isUpdate">
                  <span ng-if="!isUpdate">${_>"Password"}</span>
-                <input type="text" ng-model="$parent.user.password" ng-if="!isUpdate">
+                <input type="text" ng-model="user.password" ng-if="!isUpdate">
                  <span ng-if="!isUpdate">${_>"Confirm password"}</span>
-                <input type="text" ng-model="$parent.user.confirmPassword" ng-if="!isUpdate">
+                <input type="text" ng-model="user.confirmPassword" ng-if="!isUpdate">
                 <span>${_>"Họ"}</span>
-                <input type="text" ng-model="$parent.user.first_name">
+                <input type="text" ng-model="user.first_name">
                 <span>${_>"Tên"}</span>
-                <input type="text" ng-model="$parent.user.last_name">
+                <input type="text" ng-model="user.last_name">
             </div>
             <div>
                 <span>${_>"Là giảng viên"}</span>
-                <input type="checkbox" ng-model="$parent.user.is_staff">
+                <input type="checkbox" ng-model="user.is_staff">
                 <span>${_>"Là quản trị viên"}</span>
-                <input type="checkbox" ng-model="$parent.user.is_superuser">
+                <input type="checkbox" ng-model="user.is_superuser">
                 <span>${_>"Tình trạng"}</span>
                 <div>
-                    <input type="checkbox" ng-model="$parent.user.is_active" id="user_active_status">
+                    <input type="checkbox" ng-model="user.is_active" id="user_active_status">
                     <label for="user_active_status">
                         {{$parent.user.is_active?"Đã kích hoạt":"Chưa kích hoạt"}}
                     </label>
@@ -51,4 +51,7 @@
             </div>
         </div>
     </div>
+    <ajax url="${currentUrl}">
+        <call data-id="doLoadItem" data-params="{username:$root.$history.data().user}" ng-model="user"/>
+    </ajax>
 </div>
