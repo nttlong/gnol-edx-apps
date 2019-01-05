@@ -47,14 +47,50 @@
                 </tr>
             </tbody>
         </table>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <div class="btn-group">
+
+                    </div>
+                    <div class="btn-group">
+
+                    </div>
+                    <div class="btn-group">
+                        <a href="#{{$root.$url().param('user','*').url()}}" class="btn btn-default">${_//"Thêm"}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-if="updateResult.error">
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='username'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}Error!</strong>${_>"Please enter username"}
+        </div>
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='email'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}Error!</strong>${_>"Please enter email"}
+        </div>
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='password'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}Error!</strong>${_>"Please enter password"}
+        </div>
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='confirmPassword'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}Error!</strong>${_>"Please enter confirm password"}
+        </div>
+
     </div>
     <div q-template  url="${appUrl}/system/users/user"  ng-if="$root.$history.data().user">
 
-        </div>
+    </div>
     <ajax url="${currentUrl}">
             <call data-id="doLoadItems" data-params="{pageSize:50,pageIndex:pageIndex||0}" ng-model="users"/>
+
             <call data-id="doLoadItems" data-params="{pageSize:50,pageIndex:pageIndex||0,search:txtSearch}" data-function="doLoadItems" ng-model="users"/>
             <call data-id="user.doLoadItem" data-params="{username:$root.$history.data().user}" data-function="doLoadUser" ng-model="user"/>
-            <call data-id="user.doUpdateItem" data-params="{user:user}" data-function="doUpdateUser"/>
+            <call data-id="user.doUpdateItem" data-params="{user:user}" data-function="doUpdateUser" ng-model="updateResult"/>
+
     </ajax>
 </div>

@@ -1,9 +1,9 @@
-#coding = utf-8
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import xdj
 
+from xdj_apps.sysadmin.controllers.commons import RequireFieldError,FormController
 @xdj.Controller(
     url="system/users",
     template="system/users.html"
@@ -53,16 +53,21 @@ class system_user_controller(xdj.BaseController):
             totalPages=totalPages
         )
     @xdj.Page(url="user", template="system/user.html")
-    class user(object):
+    class user(FormController):
+        def __init__(self):
+            super(type(self),self).__init__()
         def doLoadItem(self,sender):
             """
             Get one user
             :param sender:
             :return:
             """
-            users= self.owner.__get_user_models__()
-            user = users.filter(username=sender.post_data.username).get()
-            return user
+            if sender.post_data.username =='*':
+                return {}
+            else:
+                users= self.owner.__get_user_models__()
+                user = users.filter(username=sender.post_data.username).get()
+                return user
         def doUpdateItem(self,sender):
             """
             Update account info
@@ -70,7 +75,18 @@ class system_user_controller(xdj.BaseController):
             :return:
             """
             try:
+                self.check_require_fields(sender.post_data.user,[
+                    "username",
+                    "email",
+                    "password",
+                    'comfirmPassword'
+                ])
                 user_data= xdj.dobject(sender.post_data.user)
+                if not hasattr(user_data,"username"):
+                    return xdj.dobject(
+                        error=(sender._//"Xin nhập {0}").format((sender._//"field.{0}").format("username"))
+                    )
+
                 user=self.owner.__get_user_models__().get(username=user_data.username)
                 user.first_name= user_data.first_name
                 user.last_name = user_data.last_name
@@ -79,13 +95,14 @@ class system_user_controller(xdj.BaseController):
                 user.is_staff = user_data.is_staff
                 user.is_superuser=user_data.is_superuser
                 user.save()
-
-
-
-                x = user
+                return dict()
+            except RequireFieldError as ex:
+                return dict(error = ex)
             except Exception as ex:
                 raise ex
     @xdj.Page(url="user/reset_password", template="system/user_reset_password.html")
-    class password(object):
+    class password(FormController):
+        def __init__(self):
+            super(type(self),self).__init__()
         def doSave(self,sender):
             pass
