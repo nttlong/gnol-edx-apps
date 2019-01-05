@@ -79,23 +79,36 @@ class system_user_controller(xdj.BaseController):
                     "username",
                     "email",
                     "password",
-                    'comfirmPassword'
+                    'confirmPassword'
                 ])
                 user_data= xdj.dobject(sender.post_data.user)
                 if not hasattr(user_data,"username"):
                     return xdj.dobject(
                         error=(sender._//"Xin nhập {0}").format((sender._//"field.{0}").format("username"))
                     )
+                users = self.owner.__get_user_models__().filter(username=user_data.username).all()
+                if users.count()>0:
+                    user=self.owner.__get_user_models__().get(username=user_data.username)
+                    user.first_name= user_data.first_name
+                    user.last_name = user_data.last_name
+                    user.email = user_data.email
+                    user.is_active = user_data.is_active
+                    user.is_staff = user_data.is_staff
+                    user.is_superuser=user_data.is_superuser
+                    user.save()
+                    return dict()
+                else:
+                    user = self.owner.__get_user_models__().create(
+                        username=user_data.username,
+                        email=user_data.email,
+                        password=user_data.password
+                    )
+                    user.is_active = user_data.__dict__.get("is_active", False)
+                    user.is_staff = user.__dict__.get("is_staff",False)
+                    user.is_superuser = user_data.__dict__.get("is_superuser", False)
+                    user.save()
+                    return {}
 
-                user=self.owner.__get_user_models__().get(username=user_data.username)
-                user.first_name= user_data.first_name
-                user.last_name = user_data.last_name
-                user.email = user_data.email
-                user.is_active = user_data.is_active
-                user.is_staff = user_data.is_staff
-                user.is_superuser=user_data.is_superuser
-                user.save()
-                return dict()
             except RequireFieldError as ex:
                 return dict(error = ex)
             except Exception as ex:

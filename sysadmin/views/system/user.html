@@ -1,4 +1,5 @@
 <div title="${_>'Thông tin user'}" ng-init="$parent.doLoadUser();(isUpdate=$root.$history.data().user!='*');$apply();">
+
     <div form-layout>
         <div form-template>
             <div>
@@ -38,7 +39,7 @@
             <div span="12">
                 <div class="btn-toolbar pull-right" role="toolbar" span="12">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" ng-click="$parent.doUpdateUser();">{{($root.$history.data().user=='*')?'${_>>"Thêm"}':'${_>>"Cập nhật"}'}} </button>
+                        <button type="button" class="btn btn-default" ng-click="doUpdateUser();">{{($root.$history.data().user=='*')?'${_>>"Thêm"}':'${_>>"Cập nhật"}'}} </button>
 
                     </div>
                     <div class="btn-group">
@@ -51,7 +52,27 @@
             </div>
         </div>
     </div>
+    <div class="container" ng-if="updateResult.error">
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='username'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}!</strong>${_>"Please enter username"}
+        </div>
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='email'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}!</strong>${_>"Please enter email"}
+        </div>
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='password'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}!</strong>${_>"Please enter password"}
+        </div>
+        <div class="alert alert-danger fade in" ng-if="updateResult.error.errorType=='require' && updateResult.error.fieldName=='cofirmPassword'">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>${_>"Error"}!</strong>${_>"Please enter confirm comfirm password"}
+        </div>
+
+    </div>
     <ajax url="${currentUrl}">
         <call data-id="doLoadItem" data-params="{username:$root.$history.data().user}" ng-model="user"/>
+        <call data-id="doUpdateItem" data-params="{user:user}" data-function="doUpdateUser" ng-model="updateResult"/>
     </ajax>
 </div>
