@@ -75,17 +75,9 @@ class system_user_controller(xdj.BaseController):
             :return:
             """
             try:
-                self.check_require_fields(sender.post_data.user,[
-                    "username",
-                    "email",
-                    "password",
-                    'confirmPassword'
-                ])
+
                 user_data= xdj.dobject(sender.post_data.user)
-                if not hasattr(user_data,"username"):
-                    return xdj.dobject(
-                        error=(sender._//"Xin nhập {0}").format((sender._//"field.{0}").format("username"))
-                    )
+
                 users = self.owner.__get_user_models__().filter(username=user_data.username).all()
                 if users.count()>0:
                     user=self.owner.__get_user_models__().get(username=user_data.username)
@@ -98,6 +90,12 @@ class system_user_controller(xdj.BaseController):
                     user.save()
                     return dict()
                 else:
+                    self.check_require_fields(sender.post_data.user, [
+                        "username",
+                        "email",
+                        "password",
+                        'confirmPassword'
+                    ])
                     user = self.owner.__get_user_models__().create(
                         username=user_data.username,
                         email=user_data.email,
