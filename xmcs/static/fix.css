@@ -1,0 +1,5 @@
+.modal.fade.ng-scope.in {
+    margin-left: 0 !important;
+    background: none !important;
+    position:fixed !
+}
