@@ -14,8 +14,10 @@ class system_user_controller(xdj.BaseController):
     def __get_user_models__(self):
         from django.contrib.auth import get_user_model
         return get_user_model().objects
+
     def on_get(self,sender):
         return self.render(sender)
+
     def doLoadItems(self,sender):
         """
         Get list of users
@@ -52,6 +54,10 @@ class system_user_controller(xdj.BaseController):
             totalItems=totalItems,
             totalPages=totalPages
         )
+
+
+
+
     @xdj.Page(url="user", template="system/user.html")
     class user(FormController):
         def __init__(self):
@@ -111,6 +117,13 @@ class system_user_controller(xdj.BaseController):
                 return dict(error = ex)
             except Exception as ex:
                 raise ex
+
+        def doResetPassword(self, sender):
+            from django.contrib.auth.models import User
+            usr = User.objects.get(username=sender.post_data.uid)
+            usr.set_password(sender.post_data.pwd)
+            usr.save()
+            return {}
     @xdj.Page(url="user/reset_password", template="system/user_reset_password.html")
     class password(FormController):
         def __init__(self):

@@ -34,6 +34,7 @@ function ajax(){
                                 return me;
                             }
                             me.done=function(callback){
+                                var $mask=$("<div class='mask'></div>").appendTo("body");
                                 var sender=undefined;
                                 if(ax._onBeforePost){
                                     sender=ax._onBeforePost(me);
@@ -46,6 +47,7 @@ function ajax(){
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
                                     success:function(res){
+                                        $mask.remove();
                                         if(ax._onAferPost){
                                             ax._onAferPost(me,sender);
                                         }
@@ -54,6 +56,7 @@ function ajax(){
                                         }
                                     },
                                     error:function(ex){
+                                        $mask.remove();
                                         if(ax._onAferPost){
                                             ax._onAferPost(me,sender);
                                         }

@@ -188,12 +188,14 @@ function dialog($scope) {
         }
         me.done = function (callback) {
 
+            var $mask=$("<div class='mask'></div>").appendTo("body");
 
             $.ajax({
                 method: "GET",
                 url: me._url,
                 dataType:"html",
                 success: function (res) {
+                    $mask.remove();
                     var ret = getScript(res);
                     var sScope = compile(scope, ret.scripts, ret.content,me._params);
                     if (callback) {
@@ -230,7 +232,7 @@ function dialog($scope) {
                     watch();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("some error");
+                    $mask.remove();
                 }
             })
         }

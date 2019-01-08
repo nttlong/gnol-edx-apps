@@ -8,6 +8,7 @@ div.mask{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    z-index:60000;
 
 }
 .form-element{

@@ -1,0 +1,61 @@
+<%inherit file="base.html"/>
+<style>
+    .form-element {
+        padding:8px !important;
+    }
+    .form-element label.control-label {
+        text-align:right !important;
+        float:right;
+        
+    }
+</style>
+<div class="container" style="max-width: 600px;">
+    <div class="row">
+                <div class="xs-col-12">
+                    <span>&nbsp;</span>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="xs-col-12">
+                        <span>&nbsp;</span>
+                    </div>
+            </div>
+    <form action="" method="post" role="form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token.__str__()}"/>
+        <legend>${_//"Register a new user"}</legend>
+        <div class="form-group">
+            <form-layout xs-cols="4,8" sm-cols="4,8" md-cols="4,8" lg-cols="4,8">
+                <form-template>
+                        <div>
+                                <label>${_>"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}">
+                                <label>${_>"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}">
+                                <label>${_>"Username"}</label><input type="text" placeholder="${_//'Enter Username'}">
+                                <label>${_>"Email"}</label><input type="text" placeholder="${_//'Enter email'}">
+                                <label>${_>"Password"}</label><input type="text" placeholder="${_//'Enter password'}">
+                                <label>${_>"Confirm password"}</label><input type="text" placeholder="${_//'Enter confirm password'}">
+                        </div>
+                        <div>
+                            <div class="btn-toolbar pull-right" role="toolbar" span="12">
+                                <div class="btn-group">
+                                </div>
+                                <div class="btn-group">
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary">${_>"Register"}</button>
+                                </div>
+                            </div>
+                        </div>
+                </form-template>
+                
+            </form-layout>
+        </div>
+    </form>
+</div>
+<%block name="angular">
+    <script id="angular">
+      function onInit(scope){
+        
+        scope.$applyAsync();
+      }
+    </script>
+</%block>

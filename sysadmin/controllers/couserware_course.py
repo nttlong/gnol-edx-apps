@@ -30,16 +30,18 @@ class couserware_couser_controller(xdj.BaseController):
         qr = pymqr.query(medxdb.db(), cw.modulestore_active_versions)
         for item in ret:
             # course = courseware.models.StudentModule.objects.get(course_id=item.id)
-            x = qr.new().match(pymqr.filters.org == item.id.org)\
-                .match(pymqr.filters.run == item.id.run)\
-                .match(pymqr.filters.course == item.id.course).object
+            x = qr.new().match(pymqr.funcs.expr(
+                (pymqr.docs.org == item.id.org) &
+                (pymqr.docs.run == item.id.run) &
+                (pymqr.docs.course == item.id.course)
+            )).object
             from xdj_models.models import course_authors
             fx=course_authors.course_authors()
             item.course_id=item.id.__str__()
             if not x.is_empty():
                 authors= User.objects.filter(id=x.edited_by)
                 if authors.__len__()>0:
-                    sql_items=course_authors.course_authors.objects.filter(Q(user_id=x.edited_by)&Q(course_id=item.id.__str__())).count()
+                    sql_items=course_authors.course_authors.objects.filter(Q(user_id=x.edited_by)&Q(course_id=item.id)).count()
                     item.author= xdj.dobject(username=authors[0].username)
                     if sql_items==0:
                         fx.user_id = x.edited_by

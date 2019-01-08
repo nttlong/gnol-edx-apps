@@ -74,5 +74,6 @@
     <ajax url="${currentUrl}">
         <call data-id="doLoadItem" data-params="{username:$root.$history.data().user}" ng-model="user"/>
         <call data-id="doUpdateItem" data-params="{user:user}" data-function="doUpdateUser" ng-model="updateResult"/>
+        <call data-id="doResetPassword" data-params="{pwd:reset_password.password,uid:$root.$history.data().user}" data-function="doResetPassword" ng-model="updateResult"/>
     </ajax>
 </div>

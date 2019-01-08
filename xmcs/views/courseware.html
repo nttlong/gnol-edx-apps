@@ -1,0 +1,29 @@
+<div title="${_//'Add new courseware'}">
+    <form-layout md-cols="4,8" md-sm-cols="4,8" lg-cols="4,8" xs-cols="4,8">
+        <form-template>
+            <div>
+                <label>${_//"Subject"}</label><select class="form-control"></select>
+                <label>${_//"Name"}</label><input type="text" ng-model="data.name">
+                <label>${_//"org"}</label><input type="text" ng-model="data.org"/>
+                <label>${_//"number"}</label><input type="text" ng-model="data.number"/>
+                <label>${_//"run"}</label><input type="text" ng-model="data.run"/>
+            </div>
+            <div>
+                <div class="btn-toolbar pull-right" role="toolbar" span="12">
+                    <div class="btn-group">
+                        
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" ng-click="doCreateItem">${_//"Create"}</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-click="$doClose();">${_//"Close"}</button>
+                    </div>
+                </div>
+            </div>
+        </form-template>
+    </form-layout>
+    <ajax ur="${currentUrl}">
+        <call data-id="doLoadItem" ng-model="data" />
+    </ajax>    
+</div>
