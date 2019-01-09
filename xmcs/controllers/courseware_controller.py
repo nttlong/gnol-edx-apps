@@ -21,3 +21,22 @@ class CoursewareController(xdj.BaseController):
         if isinstance(model,xdj.Model):
 
             pass
+    def DoLoadSubjects(self,model):
+        from xdj_models.models import CourseSubjects
+        return list(CourseSubjects().objects.all())
+    def DoLoadItem(self,model):
+        from xdj_models.models import CoursewareUserOrgs
+        if CoursewareUserOrgs().objects.filter(User=model.user).count()==0:
+            return dict(
+                error="org_was_not_found"
+            )
+        from xdj_models.models import CoursewareOrgs
+        from xdj_models.models import CoursewareUserOrgs
+        u_org = CoursewareUserOrgs().objects.get(User=model.user)
+        org = CoursewareOrgs().objects.get(id=u_org.Org_id)
+        return dict(
+            data=dict(
+                Org=org.OrgCode
+            )
+        )
+        pass

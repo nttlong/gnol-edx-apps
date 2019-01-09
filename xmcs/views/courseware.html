@@ -1,10 +1,12 @@
 <div title="${_//'Thêm mới khóa học'}" >
-    <form-layout md-cols="4,8" md-sm-cols="4,8" lg-cols="4,8" xs-cols="4,8">
+    <form-layout md-cols="4,8" md-sm-cols="4,8" lg-cols="4,8" xs-cols="4,8" ng-if="!data.error">
         <form-template>
             <div>
-                <label>${_//"Chủ đề"}</label><select class="form-control"></select>
+                <label>${_//"Chủ đề"}</label><select class="form-control">
+                    <option ng-repeat="p in subjects" value="{{p.id}}">{{p.SubjectName}}</option>
+                </select>
                 <label>${_//"Tên"}</label><input type="text" ng-model="data.name">
-                <label>${_//"Tổ chức"}</label><input type="text" ng-model="data.org"/>
+                <label>${_//"Tổ chức"}</label><input type="text" value="{{data.data.Org}}" readonly="readonly"/>
                 <label>${_//"Mã số"}</label><input type="text" ng-model="data.number"/>
                 <label>${_//"Lần khởi tạo"}</label><input type="text" ng-model="data.run"/>
             </div>
@@ -23,9 +25,20 @@
             </div>
         </form-template>
     </form-layout>
-    <ajax url="${currentUrl}">
-        <call data-id="DoInit" ng-model="data" />
+    <div ng-if="data.error=='org_was_not_found'">
+        <div>
+                ${_>"Thất đáng tiếc !,Tài khoản đang sử dụng không thuộc một tổ chức nào. Vì vậy, bạn không thể tạo khóa học"}
+        </div>
+        <div>
+                <button type="button" class="btn btn-default pull-right" ng-click="$doClose();">${_//"Tôi đã hiểu"}</button>
+        </div>
+        
+        
 
+    </div>
+    <ajax url="${currentUrl}">
+        <call data-id="DoLoadItem" ng-model="data" />
+        <call data-id="DoLoadSubjects" ng-model="subjects" />
     </ajax>    
 
 </div>
