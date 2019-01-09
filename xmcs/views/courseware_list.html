@@ -1,0 +1,31 @@
+<div>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="p in data">
+            
+            <table>
+                <tbody>
+                <tr>
+                    <td style="width:120px">
+                            <img src="{{p.image_urls.small}}" style="max-width:120px">
+                    </td>
+                    <td style="width:100%;" class="align-top">
+                        <div style="position:relative;top:-30px;padding:8px">
+                                <a href="/course/{{p.id}}"><h2>{{p.display_name}}</h2></a>    
+                                <p>{{p.short_description}}</p>
+                                <span>${_>"Start on"}:</span> <span>{{p.start|date:'dd-MM-yyyy'}}</span>
+                        </div>
+                        
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            
+            <!-- {{p}} -->
+        </li>
+    </ul>
+    <!-- <input type="button" ng-click="test()" value="test"> -->
+    <ajax url="${currentUrl}">
+        <call data-id="LoadItems" ng-model="data"/>
+        <call data-id="LoadItems" ng-model="data" data-function="test"/>
+    </ajax>
+</div>

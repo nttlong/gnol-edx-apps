@@ -12,4 +12,7 @@ class RegisterController(CommonController):
             return None
         else:
             return self.render(model)
+
+    def on_post(self, model):
+        pass
         # return self.render(model)

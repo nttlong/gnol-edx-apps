@@ -1,7 +1,7 @@
 import xdj
 @xdj.Controller(
     url="home",
-    replace_url_=r"^home/?$",
+    replace_url_=r"^home1/?$",
     template = "home.html",
     check_url = r"^home/?$"
 )

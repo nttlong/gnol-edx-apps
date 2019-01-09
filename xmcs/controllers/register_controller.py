@@ -7,3 +7,5 @@ import xdj
 class RegisterController(xdj.BaseController):
     def on_get(self,model):
         return self.render(model)
+    def on_post(self,model):
+        pass

@@ -18,6 +18,14 @@
                 <input type="text" ng-model="user.last_name">
             </div>
             <div>
+                <label>${_>"Thuộc doanh nghiệp"}</label>
+                <select class="form-control" span="12" ng-model="user.org">
+                    <option ng-repeat="p in orgs" value="{{p.id}}">
+                         {{p.OrgName}}   
+                    </option>
+                </select>
+            </div>
+            <div>
                 <span>${_>"Là giảng viên"}</span>
                 <input type="checkbox" ng-model="user.is_staff">
                 <span>${_>"Là quản trị viên"}</span>
@@ -73,6 +81,7 @@
     </div>
     <ajax url="${currentUrl}">
         <call data-id="doLoadItem" data-params="{username:$root.$history.data().user}" ng-model="user"/>
+        <call data-id="doLoadOrgs" ng-model="orgs"/>
         <call data-id="doUpdateItem" data-params="{user:user}" data-function="doUpdateUser" ng-model="updateResult"/>
         <call data-id="doResetPassword" data-params="{pwd:reset_password.password,uid:$root.$history.data().user}" data-function="doResetPassword" ng-model="updateResult"/>
     </ajax>

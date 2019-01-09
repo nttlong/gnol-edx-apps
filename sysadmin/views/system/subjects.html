@@ -1,0 +1,41 @@
+<div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="btn-toolbar pull-right" role="toolbar">
+                <div class="btn-group">
+
+                </div>
+                <div class="btn-group">
+
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-click="$root.$dialog($id).url('${currentUrl}/subject').done()">${_>"Thêm"}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            &nbsp;
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in data">
+            <td>
+                <input type="button" class="btn btn-default" value="${_>'Sửa'}" ng-click="selectedItem=p;$root.$dialog($id).url('${currentUrl}/subject').done();">
+            </td>
+            <td>{{p}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <ajax url="${currentUrl}">
+        <call data-id="DoLoadItems" ng-model="data"/>
+    </ajax>
+</div>

@@ -23,28 +23,36 @@ class index(xdj.BaseController):
         x=1
     def on_get(self,sender):
         sender.menu=[
-            create(dict(
+            xdj.dobject(
                 caption="Hệ thống",
                 items=[
-                    create(dict(
+
+                    xdj.dobject(
                         caption="Người dùng",
                         page="system/users"
 
-                    )),
+                    ),
                     xdj.dobject(
                         caption="Email",
                         page="system/email_settings"
                     )
                 ]
-            )),
+            ),
             xdj.dobject(
-                caption="Khóa học",
+                caption="Danh mục",
                 items=[
-                    dict(
+                    xdj.dobject(
+                        caption="Doanh nghiệp",
+                        page="system/orgs"
+                    ),
+                    xdj.dobject(
+                        caption="Lĩnh vực",
+                        page="system/subjects"
+                    ),
+                    xdj.dobject(
                         caption="Khóa học",
                         page="couserware/courses"
                     )
-                ]
-                )
+                ])
         ]
         return self.render(sender)

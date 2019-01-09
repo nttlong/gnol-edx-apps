@@ -17,3 +17,7 @@ class CoursewareController(xdj.BaseController):
         model.request._body = xdj.JSON.to_json(data)
         ret = cms.djangoapps.contentstore.views.course._create_or_rerun_course(model.request)
         return ret
+    def DoInit(self,model):
+        if isinstance(model,xdj.Model):
+
+            pass

@@ -81,12 +81,21 @@ class system_user_controller(xdj.BaseController):
             :return:
             """
             try:
+                from xdj_models.models import CoursewareUserOrgs
 
                 user_data= xdj.dobject(sender.post_data.user)
 
                 users = self.owner.__get_user_models__().filter(username=user_data.username).all()
                 if users.count()>0:
                     user=self.owner.__get_user_models__().get(username=user_data.username)
+                    org = CoursewareUserOrgs()
+                    if org.objects.filter(User=user).count()>0:
+                        org.objects.get(User=user).delete()
+                    _org = org.objects.create()
+                    _org.User = user
+                    _org.Org_id = int(sender.post_data.user["org"])
+                    _org.save()
+
                     user.first_name= user_data.first_name
                     user.last_name = user_data.last_name
                     user.email = user_data.email
@@ -124,6 +133,9 @@ class system_user_controller(xdj.BaseController):
             usr.set_password(sender.post_data.pwd)
             usr.save()
             return {}
+        def doLoadOrgs(self,model):
+            from xdj_models.models import CoursewareOrgs
+            return list(CoursewareOrgs().objects.all())
     @xdj.Page(url="user/reset_password", template="system/user_reset_password.html")
     class password(FormController):
         def __init__(self):

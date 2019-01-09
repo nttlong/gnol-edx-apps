@@ -52,6 +52,12 @@ mdl.service("$ajax",[function(){
                 if(instance.onAfterCall){
                     instance.onAfterCall(me,sender);
                 }
+                var tab = window.open('about:blank', '_blank');
+                while(ex.responseText.indexOf(String.fromCharCode(10))>-1){
+                    ex.responseText= ex.responseText.replace(String.fromCharCode(10),"<br/>");
+                }
+                tab.document.write(ex.responseText); // where 'html' is a variable containing your HTML
+                tab.document.close();
                 if(callback){
                     callback(ex,undefined);
                 }

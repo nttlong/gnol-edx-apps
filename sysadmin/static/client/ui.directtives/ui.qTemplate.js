@@ -12,9 +12,16 @@ angularDefine(function(mdl){
                     $mask.remove();
                     handler(undefined, { url: url, res: res });
                 },
-                error: function (err) {
+                error: function (ex) {
                     $mask.remove();
-                    handler(err);
+                    var tab = window.open('about:blank', '_blank');
+                    // while(ex.responseText.indexOf(String.fromCharCode(10))>-1){
+                    //     ex.responseText= ex.responseText.replace(String.fromCharCode(10),"<br/>");
+                    // }
+                    tab.document.write(ex.responseText); // where 'html' is a variable containing your HTML
+                    tab.document.close();
+                    
+
                 }
             })
         }
