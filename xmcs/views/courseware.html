@@ -2,13 +2,18 @@
     <form-layout md-cols="4,8" md-sm-cols="4,8" lg-cols="4,8" xs-cols="4,8" ng-if="!data.error">
         <form-template>
             <div>
-                <label>${_//"Chủ đề"}</label><select class="form-control">
+                <label>${_//"Chủ đề"}</label><select class="form-control" ng-model="data.subject">
                     <option ng-repeat="p in subjects" value="{{p.id}}">{{p.SubjectName}}</option>
                 </select>
                 <label>${_//"Tên"}</label><input type="text" ng-model="data.name">
                 <label>${_//"Tổ chức"}</label><input type="text" value="{{data.data.Org}}" readonly="readonly"/>
                 <label>${_//"Mã số"}</label><input type="text" ng-model="data.number"/>
                 <label>${_//"Lần khởi tạo"}</label><input type="text" ng-model="data.run"/>
+            </div>
+            <div>
+                <div span="12" ng-if="DoCreateCourseWareResult.error">
+                    {{DoCreateCourseWareResult}}
+                </div>
             </div>
             <div>
                 <div class="btn-toolbar pull-right" role="toolbar" span="12">
@@ -27,7 +32,7 @@
     </form-layout>
     <div ng-if="data.error=='org_was_not_found'">
         <div>
-                ${_>"Thất đáng tiếc !,Tài khoản đang sử dụng không thuộc một tổ chức nào. Vì vậy, bạn không thể tạo khóa học"}
+                ${_>"Thất đáng tiếc !<br/>Tài khoản đang sử dụng không thuộc một tổ chức nào. Vì vậy, bạn không thể tạo khóa học"}
         </div>
         <div>
                 <button type="button" class="btn btn-default pull-right" ng-click="$doClose();">${_//"Tôi đã hiểu"}</button>
@@ -39,6 +44,17 @@
     <ajax url="${currentUrl}">
         <call data-id="DoLoadItem" ng-model="data" />
         <call data-id="DoLoadSubjects" ng-model="subjects" />
+        <call data-id="DoCreateCourseWare" data-params="data" ng-model="DoCreateCourseWareResult" data-function="doCreateItem" data-callback="getResult" />
     </ajax>    
-
+    <script>
+        (function(scope){
+            scope.getResult=function(res){
+                debugger;
+                console.log(res);
+                if(res.url){
+                    window.location.href="${absUrl}"+res.url;
+                }
+            }
+        })
+    </script>
 </div>

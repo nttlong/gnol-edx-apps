@@ -8,15 +8,57 @@ class CoursewareController(xdj.BaseController):
         return self.render(model)
     def DoCreateCourseWare(self,model):
         import cms.djangoapps.contentstore.views.course
-        items = xdj.JSON.from_json(model.request.body)
-        data = {}
-        for x in items:
-            k = x["name"].split("-")[x["name"].split("-").__len__() - 1]
-            data.update({k: x["value"]})
+        data = xdj.JSON.from_json(model.request.body)
+        if data.get("subject","") == "":
+            return dict(
+                error="missing",
+                field="subject"
+            )
+        if not data.has_key("name"):
+            return dict(
+                error="missing",
+                field="name"
+            )
+        if not data.has_key("number"):
+            return dict(
+                error="missing",
+                field="number"
+            )
+        if not data.has_key("run"):
+            return dict(
+                error="missing",
+                field="run"
+            )
+        from xdj_models.models import CoursewareUserOrgs
+        user_org = CoursewareUserOrgs().objects.get(User=model.user)
+        from xdj_models.models import CoursewareOrgs
+        org = CoursewareOrgs().objects.get(id=user_org.Org_id)
+
         model.request.json =data
-        model.request._body = xdj.JSON.to_json(data)
+        model.request._body = xdj.JSON.to_json(dict(
+            display_name =data["name"],
+            org = org.OrgCode,
+            number = data["number"],
+            run = data["run"]
+        ))
         ret = cms.djangoapps.contentstore.views.course._create_or_rerun_course(model.request)
-        return ret
+        if hasattr(ret,"getValue"):
+            ret_json = xdj.JSON.from_json(ret.getValue())
+            if ret_json.has_key("ErrMsg"):
+                return dict(error_msg=ret_json["ErrMsg"])
+            else:
+                return ret
+        else:
+            from opaque_keys.edx.locator import CourseLocator
+            course_id = CourseLocator(org=org.OrgCode, course=data["number"], run=data["run"])
+            from xdj_models.models import CourseAuthors
+            ca = CourseAuthors().objects.create()
+            ca.user = model.user
+            from datetime import datetime
+            ca.created_on = datetime.utcnow()
+            ca.course_id = course_id
+            ca.save()
+            return ret
     def DoInit(self,model):
         if isinstance(model,xdj.Model):
 
