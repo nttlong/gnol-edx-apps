@@ -2,11 +2,9 @@
         <form-layout md-cols="4,8" md-sm-cols="4,8" lg-cols="4,8" xs-cols="4,8">
             <form-template>
                 <div>
-                    <label>${_//"Chủ đề"}</label><select class="form-control" ng-model="data.subject">
-                        <option ng-repeat="p in subjects" value="{{p.id}}">{{p.SubjectName}}</option>
-                    </select>
+                    
                     <label>${_>>"Name"}</label><input type="text" ng-model="data.name"/>
-                    <label>${_>>"Organization"}</label><input type="text" ng-model="data.org"/>
+                    <label>${_>>"Organization"}</label><input type="text" value="{{data.data.Org}}" readonly="readonly"/>
                     <label>${_>>"Code"}</label><input type="text" ng-model="data.number"/>
                 </div>
                 <div>
@@ -15,7 +13,7 @@
 
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary">${_>"Create"}</button>
+                            <button type="button" class="btn btn-primary" ng-click="doCreateLibrary()">${_>"Create"}</button>
                         </div>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default" ng-click="$doClose()">${_>"Cancel"}</button>
@@ -24,25 +22,14 @@
                 </div>
             </form-template>
         </form-layout>
-        <!-- <ol class="list-input">
-        <li class="field text required" id="field-library-name">
-            <label for="new-library-name">Library Name</label>
-            <input class="new-library-name" id="new-library-name" type="text" name="new-library-name" required="" placeholder="e.g. Computer Science Problems" aria-describedby="tip-new-library-name tip-error-new-library-name">
-            <span class="tip" id="tip-new-library-name">The public display name for your library.</span>
-            <span class="tip tip-error is-hiding" id="tip-error-new-library-name"></span>
-        </li>
-        <li class="field text required">
-            <label for="new-library-org">Organization</label>
-            <input class="new-library-org" id="new-library-org" type="text" name="new-library-org" required="" placeholder="e.g. UniversityX or OrganizationX" aria-describedby="tip-new-library-org tip-error-new-library-org">
-            <span class="tip" id="tip-new-library-org">The public organization name for your library. This cannot be changed.</span>
-            <span class="tip tip-error is-hiding" id="tip-error-new-library-org"></span>
-        </li>
-
-        <li class="field text required" id="field-library-number">
-            <label for="new-library-number">Library Code</label>
-            <input class="new-library-number" id="new-library-number" type="text" name="new-library-number" required="" placeholder="e.g. CSPROB" aria-describedby="tip-new-library-number tip-error-new-library-number">
-            <span class="tip" id="tip-new-library-number">The unique code that identifies this library. <strong>Note: This is part of your library URL, so no spaces or special characters are allowed.</strong> This cannot be changed.</span>
-            <span class="tip tip-error is-hiding" id="tip-error-new-library-number"></span>
-        </li>
-        </ol> -->
+        <error-msg ng-if="doCreateLibraryResult.error=='missing'&& doCreateLibraryResult.field=='name'" title="${_>'Error'}" on-done="doCreateLibraryResult.error=undefined">
+            ${_>"Please, enter the name"}
+        </error-msg>
+        <error-msg ng-if="doCreateLibraryResult.error=='missing'&& doCreateLibraryResult.field=='number'" title="${_>'Error'}" on-done="doCreateLibraryResult.error=undefined">
+            ${_>"Please, enter the code"}
+        </error-msg>
+        <ajax url="${currentUrl}">
+            <call data-id="DoLoadLibrary" ng-model="data"/>
+            <call data-id="DoCreateLibrary" data-params="{data:data}" ng-model="doCreateLibraryResult" data-function="doCreateLibrary"/>
+        </ajax>
 </div>

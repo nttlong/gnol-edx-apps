@@ -189,7 +189,9 @@ angularDefine(function(mdl){
             this.onHide=callback;
             return this;
         }
-        error.prototype.done=function(){
+        error.prototype.done=function(callback){
+            var me=this;
+            me.onDone=callback;
             var ele=$(instance.tmp).appendTo("body");
             ele.find("#notification-error-title").html(this.title);
             ele.find("#notification-error-description").html(this.msg);
@@ -201,6 +203,9 @@ angularDefine(function(mdl){
                 })
                 setTimeout(function(){
                     ele.remove();
+                    if(me.onDone){
+                        me.onDone();
+                    }
             }, 3000); 
             return this; 
         }
@@ -209,5 +214,19 @@ angularDefine(function(mdl){
             return new error(title,msg);
         }
     }])
-    
+    mdl.directive("errorMsg",["$msgError",function($msgError){
+        return {
+            restrict:"ECA",
+            template:"<div style='display:none' ng-transclude></div>",
+            replace:true,
+            transclude:true,
+            link:function(scope,ele,attr){
+                debugger;
+                $msgError(attr.title,$(ele[0]).html()).done(function(){
+                    scope.$eval(attr.onDone)
+                });
+            }
+        }
+
+    }])
 });
