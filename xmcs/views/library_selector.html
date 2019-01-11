@@ -1,0 +1,57 @@
+<div title="${_>'Select library'}">
+    <div style="max-height:300px;min-height:300px;overflow-y: auto">
+            <p>
+                {{selectedName}}
+            </p>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="p in data">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="width: 100%">
+                                        {{p.name}}<br>
+                                        {{p.key}}
+                                        <p>
+                                            {{p.description}}
+                                        </p>
+                                </td>
+                                <td>
+                                        <input type="button" class="btn btn-small btn-primary pull-right" value="${_>'Select'}" ng-click="doSelect(p)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    
+                </li>
+            </ul>
+    </div>
+    
+
+
+    <ajax url="${currentUrl}">
+        <call data-id="DoLoadItems" ng-model="data"/>
+    </ajax>
+    <script>
+        (function(scope,params){
+            var selectCbo = params.cbo;
+            scope.selectedName=$(selectCbo).val();
+            scope.cboEle=$(selectCbo);
+            scope.btn=params.btn;
+            scope.metaData=params.metaData;
+            scope.doSelect=function(p){
+                debugger;
+                scope.cboEle.val(p.name);
+                scope.cboEle.change();
+                scope.btn.val(p.name);
+                // scope.cboEle.append($('<option>', { 
+                //     value: p.name,
+                //     text : p.name
+                // }));
+                // scope.cboEle[0].options[0].selected=true;
+                scope.$doClose();
+            }
+            
+        })
+    </script>
+</div>

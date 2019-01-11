@@ -19,7 +19,9 @@ class CoursewareListController(CommonController):
                 image_urls=item.image_urls,
                 short_description = item.short_description,
                 start = item.start,
-                end = item.end
+                end = item.end,
+                enrollment_start=item.enrollment_start,
+                enrollment_end=item.enrollment_end,
 
             ))
 

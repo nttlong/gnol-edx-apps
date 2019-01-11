@@ -88,13 +88,14 @@ class system_user_controller(xdj.BaseController):
                 users = self.owner.__get_user_models__().filter(username=user_data.username).all()
                 if users.count()>0:
                     user=self.owner.__get_user_models__().get(username=user_data.username)
-                    org = CoursewareUserOrgs()
-                    if org.objects.filter(User=user).count()>0:
-                        org.objects.get(User=user).delete()
-                    _org = org.objects.create()
-                    _org.User = user
-                    _org.Org_id = int(sender.post_data.user["org"])
-                    _org.save()
+                    if sender.post_data.user.has_key("org"):
+                        org = CoursewareUserOrgs()
+                        if org.objects.filter(User=user).count()>0:
+                            org.objects.get(User=user).delete()
+                        _org = org.objects.create()
+                        _org.User = user
+                        _org.Org_id = int(sender.post_data.user["org"])
+                        _org.save()
 
                     user.first_name= user_data.first_name
                     user.last_name = user_data.last_name

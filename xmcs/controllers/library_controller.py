@@ -53,9 +53,9 @@ class LibrabryController(CommonController):
             lib = Libraries().objects.create()
             lib.user = model.user
             lib.name = data["name"]
-            lib.description = data["description"]
+            lib.description = data.get("description",None)
             lib.created_on = datetime.datetime.utcnow()
-            lib.id = LibraryLocator(org=org.OrgCode, library=data['number']).html_id()
+            lib.key = LibraryLocator(org=org.OrgCode, library=data['number']).html_id()
             lib.save()
             model.request._body = xdj.JSON.to_json(dict(
                 display_name=data["name"],
@@ -65,3 +65,15 @@ class LibrabryController(CommonController):
             from contentstore.views.library import library_handler
             ret = library_handler(model.request)
             x=ret
+    @xdj.Page(
+        template="library_selector.html",
+        url="selector"
+
+    )
+    class selector(object):
+
+
+        def DoLoadItems(self,model):
+            from xdj_models.models import Libraries
+            return  list(Libraries().objects.filter(user=model.user).all())
+
