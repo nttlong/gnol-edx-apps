@@ -214,16 +214,25 @@ angularDefine(function(mdl){
             return new error(title,msg);
         }
     }])
-    mdl.directive("errorMsg",["$msgError",function($msgError){
+    mdl.directive("errorMsg",["$msgError","$compile",function($msgError,$compile){
         return {
             restrict:"ECA",
-            template:"<div style='display:none' ng-transclude></div>",
+            template:"<div style='display:none'><p ng-transclude></p></div>",
             replace:true,
             transclude:true,
             link:function(scope,ele,attr){
-                debugger;
+                if(attr.msg){
+                    $msgError(attr.title,scope.$eval(attr.msg)).done(function(){
+                        scope.$apply();
+                        scope.$eval(attr.onDone)
+    
+                    });
+                    return;
+                }
                 $msgError(attr.title,$(ele[0]).html()).done(function(){
+                    scope.$apply();
                     scope.$eval(attr.onDone)
+
                 });
             }
         }

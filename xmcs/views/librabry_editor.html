@@ -7,6 +7,7 @@
                     <label>${_>>"Organization"}</label><input type="text" value="{{data.data.Org}}" readonly="readonly"/>
                     <label>${_>>"Code"}</label><input type="text" ng-model="data.number"/>
                 </div>
+               
                 <div>
                     <div class="btn-toolbar pull-right" role="toolbar" span="12">
                         <div class="btn-group">
@@ -30,6 +31,20 @@
         </error-msg>
         <ajax url="${currentUrl}">
             <call data-id="DoLoadLibrary" ng-model="data"/>
-            <call data-id="DoCreateLibrary" data-params="{data:data}" ng-model="doCreateLibraryResult" data-function="doCreateLibrary"/>
+            <call data-id="DoCreateLibrary" data-params="{data:data}" ng-model="doCreateLibraryResult" data-function="doCreateLibrary" callback="doRedirect"/>
         </ajax>
+        <error-msg ng-if="doCreateLibraryResult.ErrMsg" title="${_>'Error'}" on-done="doCreateLibraryResult.ErrMsg=undefined" msg="doCreateLibraryResult.ErrMsg"/>
+            
+        </error-msg>
+        <script>
+            (function(scope){
+                scope.doRedirect=function(res){
+                    if(res.url){
+                        window.location.href=res.url;
+                    }
+                   
+                    
+                }
+            })
+        </script>
 </div>

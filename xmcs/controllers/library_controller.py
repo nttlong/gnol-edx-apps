@@ -64,6 +64,9 @@ class LibrabryController(CommonController):
             ))
             from contentstore.views.library import library_handler
             ret = library_handler(model.request)
+            from xdj import JSON
+            if hasattr(ret,"getvalue"):
+                return JSON.from_json(ret.getvalue())
             x=ret
     @xdj.Page(
         template="library_selector.html",
