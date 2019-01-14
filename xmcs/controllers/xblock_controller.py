@@ -33,52 +33,53 @@ class XBlockController(xdj.BaseController):
             return None
         pass
     def on_post(self,model):
+        from xdj_apps.xmcs.controllers.XBlockExt import utils
         if model.params.usage_key_string:
+            x = utils.get_usage_key(model.params.usage_key_string)
+
             if hasattr(model.post_data, "publish") and model.post_data.publish == "make_public":
                 from xdj_apps.xmcs.controllers.XBlockExt.publisher import Publisher
                 return Publisher(model)
-            if model.params.usage_key_string.count("+type@sequential+block@")>0:
+            if x.block_type=="sequential":
                 from xdj_apps.xmcs.controllers.XBlockExt.sequential_modifier import  SequentialModifier
                 return SequentialModifier(model)
-            if model.params.usage_key_string.count("+type@vertical+block@")>0:
+            if x.block_type=="vertical":
                 from xdj_apps.xmcs.controllers.XBlockExt.vertical_modifier import VerticalModifier
                 return  VerticalModifier(model)
-            if model.params.usage_key_string.count("+type@library+")>0:
+            if x.block_type == "library":
                 if model.params.usage_key_string[0:'lib-block-v1:'.__len__():]==u'lib-block-v1:':
                     from xdj_apps.xmcs.controllers.XBlockExt.libraries import Library
                     # self.UpdateLibName(model)
                     return Library(model)
-            if model.params.usage_key_string.count("+type@chapter+")>0:
+            if x.block_type == "chapter":
                 from xdj_apps.xmcs.controllers.XBlockExt.chapters_modifier import ChaptersModifier
                 return ChaptersModifier(model)
-                if model.params.usage_key_string.count("+type@vertical+") > 0:
-                    from xdj_apps.xmcs.controllers.XBlockExt.vertical_modifier import VerticalModifier
-                    return VerticalModifier(model)
-                # if hasattr(model.post_data,"publish") and model.post_data.publish=="":
-                #     from xdj_apps.xmcs.controllers.XBlockExt.publisher import Publisher
-                #     return Publisher(model)
-                # else:
-                #     self.UpdateChapter(model)
-            if model.params.usage_key_string.count("+type@problem+block@")>0:
-                from  xdj_apps.xmcs.controllers.XBlockExt.xblock_modifier import XblockModifier
-                return ProblemModifier(model)
+            if x.block_type == "problem":
+                from xdj_apps.xmcs.controllers.XBlockExt.xblock_modifier import XBlockModifier
+                return XBlockModifier(model)
 
         else:
-            if model.post_data.category=="chapter" and model.post_data.parent_locator.count("+type@course+block@course")>0:
-                from xdj_apps.xmcs.controllers.XBlockExt.chapters import Chapter
-                return Chapter(model)
-            if model.post_data.category =="sequential" and model.post_data.parent_locator.count("+type@chapter+block@")>0:
-                from xdj_apps.xmcs.controllers.XBlockExt.sequential import Sequential
-                return Sequential(model)
-            if model.post_data.category =="vertical" and model.post_data.parent_locator.count("+type@sequential+block@")>0:
-                from xdj_apps.xmcs.controllers.XBlockExt.vertical import Vertical
-                return Vertical(model)
-            if model.post_data.category=="library_content" and model.post_data.parent_locator.count("+type@vertical+block@")>0:
+            if model.post_data.category == "chapter":
+                from xdj_apps.xmcs.controllers.XBlockExt.chapters_modifier import ChaptersModifier
+                return ChaptersModifier(model)
+            if model.post_data.category=="chapter":
+                from xdj_apps.xmcs.controllers.XBlockExt.chapters_modifier import ChaptersModifier
+                return ChaptersModifier(model)
+            if model.post_data.category =="sequential":
+                from xdj_apps.xmcs.controllers.XBlockExt.sequential_modifier import SequentialModifier
+                return SequentialModifier(model)
+            if model.post_data.category =="vertical":
+                from xdj_apps.xmcs.controllers.XBlockExt.vertical_modifier import VerticalModifier
+                return VerticalModifier(model)
+            if model.post_data.category=="library_content":
                 from xdj_apps.xmcs.controllers.XBlockExt.library_content import LibraryContent
                 return LibraryContent(model)
-            if model.post_data.parent_locator.count("+type@vertical+block@")>0:
-                from xdj_apps.xmcs.controllers.XBlockExt.xblock import XBlock
-                return XBlock(model)
+            else:
+                from xdj_apps.xmcs.controllers.XBlockExt.xblock_modifier import XBlockModifier
+                return XBlockModifier(model)
+            # if model.post_data.parent_locator.count("+type@vertical+block@")>0:
+            #     from xdj_apps.xmcs.controllers.XBlockExt.xblock import XBlock
+            #     return XBlock(model)
 
 
             # self.DoTrackingNewItem(model)

@@ -1,6 +1,6 @@
 import xdj
 
-class XBlock(xdj.Hanlder):
+class XBlock(xdj.Handler):
     def OnBeforeHandler(self,model):
         pass
     def OnAfterHandler(self,model):
