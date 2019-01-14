@@ -1,28 +1,33 @@
 import xdj
 
-class Sequential(xdj.Hanlder):
+class Sequential(xdj.Handler):
     def OnBeforeHandler(self,model):
         return None
     def OnAfterHandler(self,model):
-        from datetime import datetime
-        ret_data = self.from_json(model.origin_result.getvalue())
-        from opaque_keys.edx.keys import CourseKey
-        course_id = CourseKey.from_string(ret_data["courseKey"])
-        items = ret_data["locator"].split("@")
-        sequential_id = items[items.__len__() - 1]
-        Name = model.post_data.display_name
-
-        from xdj_models.models import Chapter
-        chapter_ids = model.post_data.parent_locator.split("@")
-        chapter_id = chapter_ids[chapter_ids.__len__() - 1]
         from xdj_models.models import Sequential
-        sequential = Sequential().objects.create()
-        sequential.chapter_id= chapter_id
-        sequential.user = model.user
-        sequential.display_name = Name
-        sequential.course_id = course_id
-        sequential.sequential_id = sequential_id
-        sequential.created_on =datetime.utcnow()
-        sequential.save()
-        return model.origin_result
+        from xdj_apps.xmcs.controllers.XBlockExt import utils
+        from django.db.models import Q
+
+        data = self.from_json(model.origin_result.getvalue())
+
+        x = utils.get_usage_key(data['locator'])
+        parent = utils.get_usage_key(model.post_data.parent_locator)
+        chapter_id = parent.block_id
+        if Sequential().objects.filter(Q(chapter_id=chapter_id) & Q(sequential_id=x.block_id)).count() ==0:
+            sequential = Sequential().objects.create()
+            sequential.display_name = model.post_data.display_name
+            sequential.sequential_id = x.block_id
+            sequential.user = model.user
+            sequential.course_id = x.course_key
+            sequential.created_on = utils.get_utc_now()
+            sequential.save()
+        else:
+            sequential = Sequential().objects.get(Q(chapter_id=chapter_id) & Q(sequential_id=x.block_id))
+            sequential.display_name = model.post_data.display_name
+            sequential.sequential_id = x.block_id
+            sequential.user = model.user
+            sequential.course_id = x.course_key
+            sequential.created_on = utils.get_utc_now()
+            sequential.save()
+
 
