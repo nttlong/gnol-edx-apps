@@ -57,10 +57,12 @@ class couserware_couser_controller(xdj.BaseController):
 
         return ret
     def doDeleteItem(self,sender):
+        from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
         from opaque_keys import edx
         course_id = edx.locator.CourseLocator.from_string(sender.post_data.course_id)
         import openedx.core.djangoapps.models as md
         modulestorr = md.course_details.modulestore()
         modulestorr.delete_course(course_id,sender.user.id)
+        CourseOverview.objects.filter(id=course_id).delete()
         """delete courseware by current user"""
         return {}
