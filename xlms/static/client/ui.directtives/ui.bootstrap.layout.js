@@ -213,7 +213,7 @@ angularDefine(function(mdl){
         
         divRow.contents().appendTo(e[0])
 
-        s.$apply();
+        s.$applyAsync();
     }
     watch();
     }
@@ -269,7 +269,7 @@ angularDefine(function(mdl){
                 
                 divRow.contents().appendTo(e[0])
 
-                s.$apply();
+                s.$applyAsync();
             }
             watch();
             }

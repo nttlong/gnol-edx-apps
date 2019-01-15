@@ -7,7 +7,7 @@ class ChaptersModifier(xdj.Handler):
     def OnAfterHandler(self,model):
         if model.request.method == "DELETE":
             from xdj_models.models import Vertical, Sequential, XBlock,Chapter
-            from xdj_apps.xmcs.controllers.XBlockExt import utils
+
             x = utils.get_usage_key(model.params.usage_key_string)
             sequentials = Sequential().objects.filter(chapter_id=x.block_id)
             for s in sequentials:

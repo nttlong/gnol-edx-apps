@@ -72,7 +72,7 @@ def create_object_if_not_exist(data,user,course_key,parent_id=None):
             xblock = XBlock().objects.create(xblock_id =  data["block_id"])
             xblock.creator = user
             xblock.course_id = course_key
-            xblock.display_name = data["fields"]["display_name"]
+            xblock.display_name = data["fields"].get("display_name",data["block_type"])
             xblock.created_on = get_utc_now()
             xblock.xblock_type = data["block_type"]
             xblock.vertical_id = parent_id

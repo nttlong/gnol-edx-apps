@@ -12,9 +12,15 @@ angularDefine(function(mdl){
                     $mask.remove();
                     handler(undefined, { url: url, res: res });
                 },
-                error: function (err) {
+                error: function (ex) {
                     $mask.remove();
-                    handler(err);
+                    var tab = window.open('about:blank', '_blank');
+                    // while(ex.responseText.indexOf(String.fromCharCode(10))>-1){
+                    //     ex.responseText= ex.responseText.replace(String.fromCharCode(10),"<br/>");
+                    // }
+                    tab.document.write(ex.responseText); // where 'html' is a variable containing your HTML
+                    tab.document.close();
+                    handler(ex);
                 }
             })
         }
@@ -89,7 +95,7 @@ angularDefine(function(mdl){
                             else {
                                 if(retObj.run){
                                     setTimeout(function(){
-                   retObj.run();
+                                        retObj.run();
                                         retObj.run=undefined;
                                     },50);
                                     
@@ -99,6 +105,108 @@ angularDefine(function(mdl){
                         }
                         watch();
                     })
+                })
+            }
+        }
+    }]);
+    mdl.directive("qRequire",["$parse",function($parse){
+        return {
+            restrict:"ECA",
+            replace:true,
+            transclude:true,
+            template:"<div style='display:none'><span id='msg'></span></div>",
+            link:function(scope,ele,attr){
+                if(!mdl.$$$id){
+                    mdl.$$$id=1;
+                }
+                else {
+                    mdl.$$$id++;
+                }
+                var data={
+                    id:attr.id||mdl.$$$id
+                }
+                var $errors=scope.$eval("$errors")||{
+                    length:0,
+                    errors:{}
+                };  
+                var x= scope.$eval(attr.ngModel);
+                if(angular.isUndefined(x) || (n=="")){
+                    data.message=ele.find("#msg").html();
+                    if($errors.length>0){
+                        $errors.length--;
+                        $errors.errors[data.id]=undefined;
+                    }
+                    
+                }
+                scope.$watch(attr.ngModel,function(n,o){
+                    var $errors=scope.$eval("$errors")||{
+                        length:0,
+                        errors:{}
+                    };  
+                    if(angular.isDefined(n) && (n!="") && (n!=o)){
+                        if($errors.length>0 && $errors.errors[data.id]){
+                            $errors.length--;
+                            $errors.errors[data.id]=undefined;
+                        }
+                        
+                    }
+                    else {
+                        
+                        data.message=ele.find("#msg").html();
+                        $errors.length++;
+                        $errors.errors[data.id]=data;
+                        
+                    }
+                    $parse("$errors").assign(scope,$errors);
+                        scope.$applyAsync();
+                })
+            }
+        }
+    }]);
+    mdl.directive("qRegex",["$parse",function($parse){
+        return {
+            restrict:"ECA",
+            replace:true,
+            transclude:true,
+            template:"<div style='display:none'><span id='msg'></span></div>",
+            link:function(scope,ele,attr){
+                if(!mdl.$$$id){
+                    mdl.$$$id=1;
+                }
+                else {
+                    mdl.$$$id++;
+                }
+                var data={
+                    id:attr.id||mdl.$$$id
+                }
+                  
+                scope.$watch(attr.ngModel,function(n,o){
+                    var $errors=scope.$eval("$errors")||{
+                        length:0,
+                        errors:{}
+                    };  
+                    if(angular.isDefined(n) && (n!="") && (n!=o)){
+                        var reg = new RegExp(attr.regex);
+                        var r=reg.exec(n)
+                            if(r==null){
+                                data.message=ele.find("#msg").html();
+                                $errors.length++;
+                                $errors.errors[data.id]=data;
+                            }
+                            else {
+                                if($errors.length>0 && $errors.errors[data.id]){
+                                    $errors.length--;
+                                    $errors.errors[data.id]=undefined;
+                                }
+                                
+                                
+                            }
+                            
+                            $parse("$errors").assign(scope,$errors);
+                            scope.$applyAsync();
+                    }
+                   
+
                 })
             }
         }

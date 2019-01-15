@@ -16,6 +16,13 @@ class LoginController(xdj.BaseController):
             user = authenticate(username=sender.post_data.username[0], password=sender.post_data.password[0])
             if user is not None:
                 login(sender.request, user)
+                if hasattr(sender.post_data,"next"):
+                    import urllib
+                    ret_url = urllib.unquote(sender.post_data.next[0])
+                    if ret_url.count("course_id=")>0:
+                        course_id = ret_url.split("course_id=")[1].split('&')[0]
+                        return  sender.redirect("/courses/{0}/course/".format(course_id))
+                    return sender.redirect(urllib.unquote(sender.post_data.next[0].split('=')[1]))
                 if sender.request.GET.get("next",None) == None:
                     return sender.redirect(sender.appUrl)
                 else:

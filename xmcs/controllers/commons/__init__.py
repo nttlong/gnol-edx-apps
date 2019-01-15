@@ -35,6 +35,9 @@ class CommonController(xdj.BaseController):
             return False
         else:
             return x[0].user.username == user.username
+class StaffController(xdj.BaseController):
+    def IsAllow(self,model):
+        return model.user.is_staff
 
 
 
