@@ -27,12 +27,41 @@
             <form-layout xs-cols="4,8" sm-cols="4,8" md-cols="4,8" lg-cols="4,8">
                 <form-template>
                         <div>
-                                <label>${_>"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}">
-                                <label>${_>"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}">
-                                <label>${_>"Username"}</label><input type="text" placeholder="${_//'Enter Username'}">
-                                <label>${_>"Email"}</label><input type="text" placeholder="${_//'Enter email'}">
-                                <label>${_>"Password"}</label><input type="text" placeholder="${_//'Enter password'}">
-                                <label>${_>"Confirm password"}</label><input type="text" placeholder="${_//'Enter confirm password'}">
+                                <label>${_>"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}" ng-model="data.orgName">
+                                <label>${_>"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}" ng-model="data.orgCode">
+                                <div span="12" ng-if="$errors.errors.check_org_code">
+                                    <span class="pull-right">
+                                        ${_>"Invalid code of organization"}
+                                    </span>
+                                </div>
+                                <label>${_>"Username"}</label><input type="text" placeholder="${_//'Enter Username'}" ng-model="data.username">
+                                <label>${_>"Email"}</label><input type="text" placeholder="${_//'Enter email'}" ng-model="data.email">
+                                <div span="12" ng-if="$errors.errors.check_email">
+                                    <span class="pull-right">
+                                        ${_>"Invalid email"}
+                                    </span>
+                                </div>
+                                <label>${_>"Password"}</label><input type="text" placeholder="${_//'Enter password'}" ng-model="data.password">
+                                <label>${_>"Confirm password"}</label><input type="text" placeholder="${_//'Enter confirm password'}" ng-model="data.confirmPassword">
+                        </div>
+                        <div>{{$errors}}
+                            <q-require ng-model="data.orgName"></q-require>
+                            <q-require ng-model="data.orgCode"></q-require>
+                            <q-require ng-model="data.username"></q-require>
+                            <q-require ng-model="data.email"></q-require>
+                            <q-require ng-model="data.password"></q-require>
+                            <q-require ng-model="data.confirmPassword"></q-require>
+                            <q-regex ng-model="data.email" regex="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" data-id="check_email"></q-regex>
+                            <q-regex ng-model="data.orgCode" regex="^[a-z0-9]+$" data-id="check_org_code"></q-regex>
+                            <q-regex ng-model="data.username" regex="^[a-z0-9_-]+$" data-id="check_username"></q-regex>
+                            
+                        </div>
+                        <div>
+                            <div span="12">
+                                <p ng-if="$errors.errors.check_org_code">
+                                    ${_>"Invalid code of organization"}
+                                </span>
+                            </div>
                         </div>
                         <div>
                             <div class="btn-toolbar pull-right" role="toolbar" span="12">
@@ -41,7 +70,7 @@
                                 <div class="btn-group">
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">${_>"Register"}</button>
+                                    <button type="button" class="btn btn-primary" ng-disabled="$errors.length>0">${_>"Register"}</button>
                                 </div>
                             </div>
                         </div>
