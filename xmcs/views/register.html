@@ -27,33 +27,56 @@
             <form-layout xs-cols="4,8" sm-cols="4,8" md-cols="4,8" lg-cols="4,8">
                 <form-template>
                         <div>
-                                <label>${_>"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}" ng-model="data.orgName">
-                                <label>${_>"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}" ng-model="data.orgCode">
+                                <label>${_>"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}" ng-model="data.orgName" name="org_name">
+                                <label>${_>"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}" ng-model="data.orgCode" name="org_code" ng-change="error=undefined">
+                                <div span="12" ng-if="error.error_type=='org_code_exist'">
+                                    <span class="pull-right">
+                                        ${_>"Code of organizaion is existing"}
+                                    </span>
+                                </div>
                                 <div span="12" ng-if="$errors.errors.check_org_code">
                                     <span class="pull-right">
                                         ${_>"Invalid code of organization"}
                                     </span>
                                 </div>
-                                <label>${_>"Username"}</label><input type="text" placeholder="${_//'Enter Username'}" ng-model="data.username">
-                                <label>${_>"Email"}</label><input type="text" placeholder="${_//'Enter email'}" ng-model="data.email">
+                                <label>${_>"Username"}</label><input type="text" placeholder="${_//'Enter Username'}" ng-model="data.username" name="username" ng-change="error=undefined;">
+                                <div span="12" ng-if="error.error_type=='user_exist'">
+                                    <span class="pull-right">
+                                        ${_>"Username is existing"}
+                                    </span>
+                                </div>
+                                <label>${_>"Email"}</label><input type="text" placeholder="${_//'Enter email'}" ng-model="data.email" name="email" ng-change="error=undefined;">
+                                <div span="12" ng-if="error.error_type=='email_exist'">
+                                    <span class="pull-right">
+                                        ${_>"Email is existing"}
+                                    </span>
+                                </div>
                                 <div span="12" ng-if="$errors.errors.check_email">
                                     <span class="pull-right">
                                         ${_>"Invalid email"}
                                     </span>
                                 </div>
-                                <label>${_>"Password"}</label><input type="text" placeholder="${_//'Enter password'}" ng-model="data.password">
-                                <label>${_>"Confirm password"}</label><input type="text" placeholder="${_//'Enter confirm password'}" ng-model="data.confirmPassword">
+                                <label>${_>"Password"}</label><input type="password" placeholder="${_//'Enter password'}" ng-model="data.password" name="password">
+                               
+                                <label>${_>"Confirm password"}</label><input type="password" placeholder="${_//'Enter confirm password'}" ng-model="data.confirmPassword">
+                                <div span="12" ng-if="$errors.errors.pass_miss_match">
+                                    <span class="pull-right">
+                                        ${_>"Password and confirm password is not match"}
+                                    </span>
+                                </div>
                         </div>
-                        <div>{{$errors}}
+                        <div>
                             <q-require ng-model="data.orgName"></q-require>
                             <q-require ng-model="data.orgCode"></q-require>
                             <q-require ng-model="data.username"></q-require>
                             <q-require ng-model="data.email"></q-require>
                             <q-require ng-model="data.password"></q-require>
                             <q-require ng-model="data.confirmPassword"></q-require>
-                            <q-regex ng-model="data.email" regex="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" data-id="check_email"></q-regex>
-                            <q-regex ng-model="data.orgCode" regex="^[a-z0-9]+$" data-id="check_org_code"></q-regex>
-                            <q-regex ng-model="data.username" regex="^[a-z0-9_-]+$" data-id="check_username"></q-regex>
+                            <q-regex ng-model="data.email" regex="^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$" data-id="check_email"></q-regex>
+                            <q-regex ng-model="data.orgCode" regex="^[A-Za-z0-9]+$" data-id="check_org_code"></q-regex>
+                            <q-regex ng-model="data.username" regex="^[A-Za-z0-9_-]+$" data-id="check_username"></q-regex>
+                            <p ng-if="data.password!=data.confirmPassword" ng-init="$errors.add('pass_miss_match','')" style="display:none"></p>
+                            <p ng-if="data.password==data.confirmPassword" ng-init="$errors.errors['pass_miss_match']=undefined" style="display:none"></p>
                             
                         </div>
                         <div>
@@ -70,7 +93,7 @@
                                 <div class="btn-group">
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary" ng-disabled="$errors.length>0">${_>"Register"}</button>
+                                    <button type="submit" class="btn btn-primary" ng-disabled="$errors.count()>0">${_>"Register"}</button>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +106,10 @@
 <%block name="angular">
     <script id="angular">
       function onInit(scope){
-        
+          var data =${to_json(ng_data)};
+          scope.error=data.error;
+          scope.data =data.data
+       
         scope.$applyAsync();
       }
     </script>
