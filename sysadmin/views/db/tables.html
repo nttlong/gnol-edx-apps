@@ -1,0 +1,18 @@
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>${_//"Table"}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in data">
+            <td>{{p}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ajax url="${currentUrl}">
+        <call data-id="DoLoadItems" ng-model="data"/>
+    </ajax>
+</div>

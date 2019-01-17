@@ -1,0 +1,34 @@
+<div>
+    <form-layout xs-cols="12" sm-cols="1,11"  md-cols="1,11"  lg-cols="1,11">
+        <form-template>
+            <div>
+                <label>${_//"SQL"}</label>
+                <textarea class="form-control" ng-model="data.sql" style="min-height:400px">
+                </textarea>
+            </div>
+            <div>
+                <div span="12">
+                    <p>
+                        {{execResult}}
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="btn-toolbar pull-right" role="toolbar" span="12">
+                    <div class="btn-group">
+
+                    </div>
+                    <div class="btn-group">
+
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-click="doExecSql();">${_//"Exec"}</button>
+                    </div>
+                </div>
+            </div>
+        </form-template>
+    </form-layout>
+    <ajax url="${currentUrl}">
+        <call data-id="DoExecSql" data-params="data" ng-model="execResult" data-function="doExecSql"/>
+    </ajax>
+</div>

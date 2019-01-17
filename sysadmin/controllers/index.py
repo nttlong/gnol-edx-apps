@@ -64,6 +64,19 @@ class index(xdj.BaseController):
                     )
                 ]
 
+            ),
+            xdj.dobject(
+                caption="Database",
+                items=[
+                    xdj.dobject(
+                        caption="Tables",
+                        page="db/tables"
+                    ),
+                    xdj.dobject(
+                        caption="SQL",
+                        page="db/sql"
+                    )
+                ]
             )
         ]
         return self.render(sender)
