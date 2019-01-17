@@ -22,11 +22,11 @@
         </div>
     %if error_type=="token_was_not_found":
         <p>
-            ${_>"Activation token was not found"}
+            ${_//"Activation token was not found"}
         </p>
     %elif error_type == "token_was_expired":
         <p>
-            ${_>"Activation token was expired"}
+            ${_//"Activation token was expired"}
         </p>
     %else:
 
@@ -34,7 +34,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                <form action="" method="post" role="form">
                         <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token.__str__()}"/>
-                        <input type="submit" value="${_>'Active your account now'}" class="btn btn-primary">
+                        <input type="submit" value="${_//'Active your account now'}" class="btn btn-primary">
                 </form>
             </div>
         </div>

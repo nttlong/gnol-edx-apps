@@ -1,0 +1,74 @@
+<div title="${_>'Linguistics'}">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <span>&nbsp;</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="btn-toolbar pull-right" role="toolbar">
+                <div class="btn-group">
+
+                </div>
+                <div class="btn-group">
+                    <div class="input-group" style="max-width:320px">
+                      <input type="text" class="form-control" placeholder="${_//'Search'}" ng-model="txtSearch">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="doRefresh();">${_//"Search"}</button>
+                      </span>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-click="txtSearch=undefined;doRefresh();">${_//"Refresh"}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <span>&nbsp;</span>
+        </div>
+    </div>
+    <div class="row" ng-if="!$root.$history.data().key">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>${_//"Language"}</th>
+                        <th>${_//"App"}</th>
+                        <th>${_//"View"}</th>
+                        <th>${_//"Key"}</th>
+                        <th>${_//"Value"}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="p in data.items">
+                        <td>
+                            <a class="btn btn-default small " href="#{{$root.$url().param('key',p._id).url()}}">
+                                    ${_//"Edit"}
+                            </a>
+                            
+                        </td>
+                        <td>{{p.language}}</td>
+                        <td>{{p.app}}</td>
+                        <td>{{p.view}}</td>
+                        <td>{{p.key}}</td>
+                        <td>{{p.value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" ng-if="$root.$history.data().key">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <q-template url="${currentUrl}/editor">
+
+                </q-template>
+            </div>
+        </div>
+    <ajax url="${currentUrl}">
+        <call data-id="DoLoadItems" ng-model="data"/>
+        <call data-id="DoLoadItems" ng-model="data" data-function="doRefresh" params="{search:txtSearch}"/>
+    </ajax>
+</div>

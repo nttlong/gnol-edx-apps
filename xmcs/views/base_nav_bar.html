@@ -1,0 +1,107 @@
+<style>
+        .flag-icon {
+            background-position-x:50%;
+            background-position-y:50%;
+            background-size:contain;
+            color:rgb(85, 85, 85);
+            cursor:pointer;
+            display:inline-block;
+            font-family:"Open Sans", Verdana, Geneva, sans-serif, sans-serif;
+            font-size:16px;
+            font-stretch:100%;
+            font-style:italic;
+            font-variant-caps:normal;
+            font-variant-east-asian:normal;
+            font-variant-ligatures:normal;
+            font-variant-numeric:normal;
+            font-weight:400;
+            height:32px !important;
+            line-height:16px;
+            list-style-image:none;
+            list-style-position:outside;
+            list-style-type:none;
+            position:relative;
+            text-align:left;
+            text-size-adjust:100%;
+            width:21.3333px;
+            margin: 0 !important;
+            padding: 0 !important;
+            -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+        }
+        .language span {
+                position: relative;
+                top: -12px;
+        }
+        .flag-icon-en {
+              background-image: url('${static}/flags/en.svg');
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: contain;
+              /* min-width: 30px;
+              max-width: 30px;
+              width: 30px;
+              height: 30px;
+              border: none !important; */
+         }
+         .flag-icon-vi {
+              background-image: url('${static}/flags/vn.svg');
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: contain;
+              /* min-width: 30px;
+              max-width: 30px;
+              width: 30px;
+              height: 30px;
+              border: none !important; */
+         }
+         .flag-icon, .flag-icon-background {
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50%;
+        }
+       
+</style>
+<div class="wrapper-header wrapper" id="view-top">
+        <header class="primary" role="banner">
+      
+          <div class="wrapper wrapper-l">
+            <h1 class="branding">
+              <a class="brand-link" href="/">
+                <img class="brand-image" src="/cms/static/images/logo.png"  />
+              </a>
+            </h1>
+      
+          </div>
+      
+            <div class="wrapper wrapper-r">
+                    <ul class="nav navbar-nav pull-right">
+                            <li class="dropdown language">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="flag-icon flag-icon-${request.LANGUAGE_CODE}"></i>
+                                    <span > 
+                                        <!-- <input type="button" class="flag-icon-au"/> -->
+                                        <b class="caret"></b>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:_do_select_lang('en')"><i class="flag-icon flag-icon-en"></i><span>&nbsp;</span> <span>English</span></a></li>
+                                    <li><a href="javascript:_do_select_lang('vi')"><i class="flag-icon flag-icon-vi"></i><span>&nbsp;</span><span>Tiếng Việt</span></a></li>
+                                </ul>
+                            </li>
+                    </ul>
+                    
+            </div>
+        </header>
+      </div>
+      <form action="/cms/change_language" method="POST" id="form_change_language">
+            <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token.__str__()}"/>
+            <input type="hidden" name="url" id="url"/>
+            <input type="hidden" name="language" id="language"/>
+      </form>
+      <script>
+          function _do_select_lang(code){
+                $("#url").val(window.location.href);
+                $("#language").val(code);
+                $("#form_change_language")[0].submit();
+          }
+      </script>
+     

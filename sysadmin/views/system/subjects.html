@@ -9,7 +9,7 @@
 
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default" ng-click="$root.$dialog($id).url('${currentUrl}/subject').done()">${_>"Thêm"}</button>
+                    <button type="button" class="btn btn-default" ng-click="$root.$dialog($id).url('${currentUrl}/subject').done()">${_//"New subject"}</button>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <tbody>
         <tr ng-repeat="p in data">
             <td>
-                <input type="button" class="btn btn-default" value="${_>'Sửa'}" ng-click="selectedItem=p;$root.$dialog($id).url('${currentUrl}/subject').done();">
+                <input type="button" class="btn btn-default" value="${_//'Edit'}" ng-click="selectedItem=p;$root.$dialog($id).url('${currentUrl}/subject').done();">
             </td>
             <td>{{p}}</td>
         </tr>

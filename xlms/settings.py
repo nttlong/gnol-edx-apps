@@ -7,4 +7,5 @@ host_dir="lms"
 app_name="gnol-lms"
 rel_login_url="login"
 def on_get_language_resource_item(language,appname,view,key,value):
-    return value
+    from xdj import languages
+    return languages.get_item(language, appname, view, key, value)

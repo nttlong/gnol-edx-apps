@@ -27,41 +27,41 @@
             <form-layout xs-cols="4,8" sm-cols="4,8" md-cols="4,8" lg-cols="4,8">
                 <form-template>
                         <div>
-                                <label>${_>"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}" ng-model="data.orgName" name="org_name">
-                                <label>${_>"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}" ng-model="data.orgCode" name="org_code" ng-change="error=undefined">
+                                <label>${_//"Organization name"}</label><input type="text" placeholder="${_//'Enter your organizaion name'}" ng-model="data.orgName" name="org_name">
+                                <label>${_//"Organization code"}</label><input type="text" placeholder="${_//'Enter your organizaion code'}" ng-model="data.orgCode" name="org_code" ng-change="error=undefined">
                                 <div span="12" ng-if="error.error_type=='org_code_exist'">
                                     <span class="pull-right">
-                                        ${_>"Code of organizaion is existing"}
+                                        ${_//"Code of organizaion is existing"}
                                     </span>
                                 </div>
                                 <div span="12" ng-if="$errors.errors.check_org_code">
                                     <span class="pull-right">
-                                        ${_>"Invalid code of organization"}
+                                        ${_//"Invalid code of organization"}
                                     </span>
                                 </div>
-                                <label>${_>"Username"}</label><input type="text" placeholder="${_//'Enter Username'}" ng-model="data.username" name="username" ng-change="error=undefined;">
+                                <label>${_//"Username"}</label><input type="text" placeholder="${_//'Enter Username'}" ng-model="data.username" name="username" ng-change="error=undefined;">
                                 <div span="12" ng-if="error.error_type=='user_exist'">
                                     <span class="pull-right">
-                                        ${_>"Username is existing"}
+                                        ${_//"Username is existing"}
                                     </span>
                                 </div>
-                                <label>${_>"Email"}</label><input type="text" placeholder="${_//'Enter email'}" ng-model="data.email" name="email" ng-change="error=undefined;">
+                                <label>${//>"Email"}</label><input type="text" placeholder="${_//'Enter email'}" ng-model="data.email" name="email" ng-change="error=undefined;">
                                 <div span="12" ng-if="error.error_type=='email_exist'">
                                     <span class="pull-right">
-                                        ${_>"Email is existing"}
+                                        ${_//"Email is existing"}
                                     </span>
                                 </div>
                                 <div span="12" ng-if="$errors.errors.check_email">
                                     <span class="pull-right">
-                                        ${_>"Invalid email"}
+                                        ${_//"Invalid email"}
                                     </span>
                                 </div>
-                                <label>${_>"Password"}</label><input type="password" placeholder="${_//'Enter password'}" ng-model="data.password" name="password">
+                                <label>${_//"Password"}</label><input type="password" placeholder="${_//'Enter password'}" ng-model="data.password" name="password">
                                
-                                <label>${_>"Confirm password"}</label><input type="password" placeholder="${_//'Enter confirm password'}" ng-model="data.confirmPassword">
+                                <label>${_//"Confirm password"}</label><input type="password" placeholder="${_//'Enter confirm password'}" ng-model="data.confirmPassword">
                                 <div span="12" ng-if="$errors.errors.pass_miss_match">
                                     <span class="pull-right">
-                                        ${_>"Password and confirm password is not match"}
+                                        ${_//"Password and confirm password is not match"}
                                     </span>
                                 </div>
                         </div>
@@ -82,7 +82,7 @@
                         <div>
                             <div span="12">
                                 <p ng-if="$errors.errors.check_org_code">
-                                    ${_>"Invalid code of organization"}
+                                    ${_//"Invalid code of organization"}
                                 </span>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                 <div class="btn-group">
                                 </div>
                                 <div class="btn-group">
-                                    <button type="submit" class="btn btn-primary" ng-disabled="$errors.count()>0">${_>"Register"}</button>
+                                    <button type="submit" class="btn btn-primary" ng-disabled="$errors.count()>0">${_//"Register"}</button>
                                 </div>
                             </div>
                         </div>

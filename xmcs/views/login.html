@@ -6,15 +6,15 @@
         </div>
     </div>
     <form action="" method="post" role="form">
-        <legend>${_>"Login"}</legend>
+        <legend>${_//"Login"}</legend>
 
         <div class="form-group">
             <form-layout xs-cols="4,8" sm-cols="4,8" md-cols="4,8" lg-cols="4,8">
                     <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token.__str__()}"/>
                 <form-template>
                         <div>
-                                <label>${_>"Username or email"}</label><input type="text" placeholder="${_>'Username or email'}" name="id">
-                                <label>${_>"Password"}</label><input type="password" placeholder="${_>'Enter password'}" name="pwd">
+                                <label>${_//"Username or email"}</label><input type="text" placeholder="${_//'Username or email'}" name="id">
+                                <label>${_//"Password"}</label><input type="password" placeholder="${_//'Enter password'}" name="pwd">
                         </div>
                         
                         % if error:
@@ -34,7 +34,7 @@
 
                                 </div>
                                 <div class="btn-group">
-                                    <button type="submit" class="btn btn-default">${_>"Login"}</button>
+                                    <button type="submit" class="btn btn-default">${_//"Login"}</button>
                                 </div>
                             </div>
                         </div>

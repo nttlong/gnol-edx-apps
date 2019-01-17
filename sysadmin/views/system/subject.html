@@ -1,15 +1,15 @@
-<div title="${_>'Thêm mới/sửa thông tin chủ đề'}" ng-init="data=$parent.selectedItem||{SubjectCode:'',SubjectName:'',SubjectFName:''}">
+<div title="${_//'Edit or add new subject'}" ng-init="data=$parent.selectedItem||{SubjectCode:'',SubjectName:'',SubjectFName:''}">
     <form-layout>
         <form-template>
             <div>
-                <label>${_>"Mã"}</label><input type="text" ng-model="data.SubjectCode"/>
+                <label>${_//"Code"}</label><input type="text" ng-model="data.SubjectCode"/>
             </div>
             <div>
-                <label>${_>"Tên"}</label><input type="text" ng-model="data.SubjectName" span="12"/>
-                <label>${_>"Tên khác"}</label><input type="text" ng-model="data.SubjectFName" span="12"/>
+                <label>${_//"Name"}</label><input type="text" ng-model="data.SubjectName" span="12"/>
+                <label>${_//"Foreigner name"}</label><input type="text" ng-model="data.SubjectFName" span="12"/>
             </div>
             <div>
-                <label>${_>"Ghi chú"}</label>
+                <label>${_//"Description"}</label>
                 <textarea ng-model="data.SubjectDescription" span="12" class="form-control"></textarea>
             </div>
             <div>
@@ -23,10 +23,10 @@
 
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" ng-click="doSave()">${_>"Cập nhật"}</button>
+                        <button type="button" class="btn btn-primary" ng-click="doSave()">${_//"Update"}</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" ng-click="$doClose();">${"Đóng"}</button>
+                        <button type="button" class="btn btn-default" ng-click="$doClose();">${_//"Cancel"}</button>
                     </div>
                 </div>
             </div>

@@ -22,37 +22,48 @@ class index(xdj.BaseController):
     def __init__(self):
         x=1
     def on_get(self,sender):
+        _ = sender._
         sender.menu=[
             xdj.dobject(
-                caption="Hệ thống",
+                caption=_>"System",
                 items=[
 
                     xdj.dobject(
-                        caption="Người dùng",
+                        caption=_>"Accounts",
                         page="system/users"
 
                     ),
                     xdj.dobject(
-                        caption="Email",
+                        caption=_>"Email",
                         page="system/email_settings"
                     )
                 ]
             ),
             xdj.dobject(
-                caption="Danh mục",
+                caption=_>"Categories",
                 items=[
                     xdj.dobject(
-                        caption="Doanh nghiệp",
+                        caption=_>"Organization",
                         page="system/orgs"
                     ),
                     xdj.dobject(
-                        caption="Lĩnh vực",
+                        caption=_>"Subject",
                         page="system/subjects"
                     ),
                     xdj.dobject(
-                        caption="Khóa học",
+                        caption=_>"Courses",
                         page="couserware/courses"
                     )
-                ])
+                ]),
+            xdj.dobject(
+                caption="Resources",
+                items=[
+                    xdj.dobject(
+                        caption=_ > "Linguistics",
+                        page="linguistics/list"
+                    )
+                ]
+
+            )
         ]
         return self.render(sender)

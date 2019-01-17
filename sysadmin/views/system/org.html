@@ -1,15 +1,15 @@
-<div title="${_>'Thêm/sửa thông tin doanh nghiệp'}" ng-init="data=$parent.editItem||{OrgCode:'',OrgName:''}">
+<div title="${_//'Edot or add new organiozation info'}" ng-init="data=$parent.editItem||{OrgCode:'',OrgName:''}">
     <form-layout>
         <form-template>
             <div>
-                <label>${_//"Mã"}</label><input type="text" ng-model="data.OrgCode" maxlength="50"/>
+                <label>${_//"Code"}</label><input type="text" ng-model="data.OrgCode" maxlength="50"/>
                 
             </div>
             <div>
-                <label>${_//"Tên"}</label><input type="text" ng-model="data.OrgName" span="12" maxlength="200"/>
+                <label>${_//"Name"}</label><input type="text" ng-model="data.OrgName" span="12" maxlength="200"/>
             </div>
             <div>
-                <label>${_//"Tên khác"}</label><input type="text" ng-model="data.OrgFName" span="12" maxlength="200"/>
+                <label>${_//"Foreigner name"}</label><input type="text" ng-model="data.OrgFName" span="12" maxlength="200"/>
             </div>
             <div ng-if="saveItemResult.error_field">
                 <span span="12">
@@ -23,10 +23,10 @@
 
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" ng-click="doSave()">${_>"Cập nhật"}</button>
+                        <button type="button" class="btn btn-primary" ng-click="doSave()">${_//"Update"}</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" ng-click="$doClose()">${_>"Đóng"}</button>
+                        <button type="button" class="btn btn-default" ng-click="$doClose()">${_//"Đóng"}</button>
                     </div>
                 </div>
             </div>

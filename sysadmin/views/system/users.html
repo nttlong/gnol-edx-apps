@@ -1,10 +1,10 @@
-<div title="${_>>'Danh sách người dùng'}" ng-init="ajaxUrl='${currentUrl}'">
+<div title="${_//'List of accounts'}" ng-init="ajaxUrl='${currentUrl}'">
     <div class="container" ng-show="!$root.$history.data().user">
         <div class="row">
     	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
     		<div class="input-group">
                 <input type="text" class="form-control" ng-model="txtSearch">
-                <span class="input-group-addon" ng-click="doLoadItems()">${_//"Tìm"}</span>
+                <span class="input-group-addon" ng-click="doLoadItems()">${_//"Search"}</span>
               </div>
     	</div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -21,7 +21,7 @@
             <button type="button" class="btn btn-default">7</button>
         </div>
         <div class="btn-group">
-            <button type="button" class="btn btn-default" ng-click="doLoadItems()">${_//"Nạp lại"}</button>
+            <button type="button" class="btn btn-default" ng-click="doLoadItems()">${_//"Refresh"}</button>
         </div>
     </div>
         </div>
@@ -32,10 +32,10 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>${_>"Username"}</th>
-                    <th>${_>"Email"}</th>
-                    <th>${_>"Họ"}</th>
-                    <th>${_>"Tên"}</th>
+                    <th>${_//"Username"}</th>
+                    <th>${_//"Email"}</th>
+                    <th>${_//"First name"}</th>
+                    <th>${_//"Last name"}</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +47,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="container" ng-show="!$root.$history.data().user">
+            <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="btn-toolbar pull-right" role="toolbar">
@@ -57,7 +60,7 @@
 
                     </div>
                     <div class="btn-group">
-                        <a href="#{{$root.$url().param('user','*').url()}}" class="btn btn-default">${_//"Thêm"}</a>
+                        <a href="#{{$root.$url().param('user','*').url()}}" class="btn btn-default">${_//"New account"}</a>
                     </div>
                 </div>
             </div>

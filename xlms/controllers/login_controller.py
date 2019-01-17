@@ -30,5 +30,6 @@ class LoginController(xdj.BaseController):
             else:
                 sender.isError=True
 
+
             sender.username = sender.post_data.username[0]
         return self.render(sender)
