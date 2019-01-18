@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!--[if lte IE 9]><html class="ie ie9 lte9" lang="en" ng-app="lms"><![endif]-->
+<!--[if !IE]><!--><html lang="en" ng-app="lms"><!--<![endif]-->
+<head dir="ltr">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>
+        <%block name="title"/>
+      </title>
+  <script type="text/javascript" src="/static/js/i18n/en/djangojs.js"></script>
+  <script type="text/javascript" src="/static/js/ie11_find_array.js"></script>
+  <link rel="icon" type="image/x-icon" href="/static/mages/favicon.ico" />
+  <link href="/static/css/lms-style-vendor.css" rel="stylesheet" type="text/css" />
+  <link href="/static/css/lms-main-v1.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/static/js/lms-main_vendor.js" charset="utf-8"></script>
+  <script type="text/javascript" src="/static/js/lms-application.js" charset="utf-8"></script>
+  <script type="text/javascript" src="/static/bundles/commons.js" ></script>
+  <link rel="stylesheet" href="/static/css/vendor/font-awesome.css" type="text/css" media="all" / >
+  <link rel="stylesheet" href="/static/css/vendor/jquery.qtip.min.css" type="text/css" media="all" / >
+  <link rel="stylesheet" href="/static/css/lms-main-v1.css" type="text/css" media="all" / >
+  <script type="text/javascript" src="/static/common/js/vendor/jquery.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/jquery-migrate.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/url.min.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/underscore.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/underscore.string.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/picturefill.js"></script>
+  <script type="text/javascript" src="/static/edx-ui-toolkit/js/utils/global-loader.js"></script>
+  <script type="text/javascript" src="/static/edx-ui-toolkit/js/utils/string-utils.js"></script>
+  <script type="text/javascript" src="/static/edx-ui-toolkit/js/utils/html-utils.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/require.js"></script>
+  <script type="text/javascript" src="/static/js/RequireJS-namespace-undefine.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/URI.min.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/backbone.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/json2.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/jquery.qtip.min.js"></script>
+  <script type="text/javascript" src="/static/js/vendor/jquery.ba-bbq.min.js"></script>
+
+
+  <script type="text/javascript" src="/static/js/src/ajax_prefix.js"></script>
+  <script type="text/javascript" src="/static/js/src/jquery.immediateDescendents.js"></script>
+  <script type="text/javascript" src="/static/js/src/xproblem.js"></script>
+  <script type="text/javascript" src="/static/common/js/xblock/core.js"></script>
+  <script type="text/javascript" src="/static/common/js/xblock/runtime.v1.js"></script>
+  <script type="text/javascript" src="/static/lms/js/xblock/lms.runtime.v1.js"></script>
+  <script type="text/javascript" src="/static/js/src/utility.js"></script>
+  <script type="text/javascript" src="/static/js/src/logger.js"></script>
+  <script type="text/javascript" src="/static/js/user_dropdown_v1.js"></script>
+  <script type="text/javascript" src="/static/js/dialog_tab_controls.js"></script>
+  <script type="text/javascript" src="/static/js/src/string_utils.js"></script>
+  <script type="text/javascript" src="/static/js/form.ext.js"></script>
+  <script type="text/javascript" src="/static/js/src/ie_shim.js"></script>
+  <script type="text/javascript" src="/static/js/src/accessibility_tools.js"></script>
+  <script type="text/javascript" src="/static/js/toggle_login_modal.js"></script>
+  <script type="text/javascript" src="/static/js/src/lang_edx.js"></script>
+  <script type="text/javascript" src="/static/js/calculator.js"></script>
+  <script type="text/javascript" src="/static/js/feedback_form.js"></script>
+  <script type="text/javascript" src="/static/js/main.js"></script>
+  <script type="text/javascript" src="/static/js/sticky_filter.js"></script>
+  <script type="text/javascript" src="/static/js/query-params.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/moment-with-locales.js"></script>
+  <script type="text/javascript" src="/static/common/js/vendor/moment-timezone-with-data.js"></script>
+
+  <meta name="path_prefix" content="">
+  <meta name="openedx-release-line" content="hawthorn" />
+<link rel="stylesheet" href="/lms/static/site.css" type="text/css" media="all" />
+<script src="/lms/static/client/angular.min.js"></script>
+<script src="/lms/static/client/ajax.js"></script>
+<script src="/lms/static/client/ui.js"></script>
+<script src="/lms/static/client/ui.directtives/ui.qTemplate.js"></script>
+<script src="/lms/static/client/ui.directtives/ui.service.ajax.js"></script>
+<script src="/lms/static/client/ui.directtives/ui.drectives.ajax.js"></script>
+<script src="/lms/static/client/ui.directtives/ui.directitive.ajax.call.js"></script>
+<script src="/lms/static/client/ui.directtives/ui.services.dialog.js"></script>
+<script src="/lms/static/client/ui.directtives/ui.bootstrap.layout.js"></script>
+
+ <link rel="stylesheet" href="/lms/static/boostrap/css/bootstrap.min.css" type="text/css" media="all" />
+</head>
+
+<body class="ltr  lang_en" ng-controller="lms"  ng-cloak >
+    <header class="global-header ">
+    <div class="main-header">
+
+
+
+
+
+
+<h1 class="header-logo">
+  <a href="/dashboard">
+
+    <!--<img  class="logo" src="/static/images/logo.png" alt="Your Platform Name Here Home Page"/>-->
+    <img  class="logo" src="/lms/static/logo.png" alt="Your Platform Name Here Home Page"/>
+
+  </a>
+</h1>
+
+        <div class="hamburger-menu" role="button" aria-label=Options Menu aria-expanded="false" aria-controls="mobile-menu" tabindex="0">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="mobile-menu hidden" aria-label=More Options role="menu" id="mobile-menu"></div>
+
+</header>
+    <main id="main">
+        <div id="content-container">
+           ${self.body()}
+        </div>
+    </main>
+    <style>
+        textarea, input[type="text"], input[type="url"], input[type="email"], input[type="password"], input[type="tel"] {
+            /* background: #fff; */
+            /* border: 1px solid #c8c8c8; */
+            border-radius: 0 !important;
+            /* box-shadow: 0 1px 0 0 rgba(255,255,255,0.6), inset 0 0 3px 0 rgba(0,0,0,0.1); */
+            /* box-sizing: border-box; */
+            font: inherit !important;
+            height: 35px;
+            padding: 5px 12px;
+            vertical-align: top;
+            -webkit-font-smoothing: antialiased;}
+         .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid #0075b4 !important;
+            border-radius: 0px !important;
+            color: #fcfcfc !important;
+            font-family: inherit !important;
+         }
+    </style>
+    <script src="/lms/static/bootstrap.js"></script>
+    <%block name="angular"/>
+    <script name="angular">
+        var mdl = angular.module("lms",["q-ui"]);
+        var ctrl =mdl.controller("lms",["$compile","$ajax","$scope",function($compile,$ajax,$scope){
+          $scope.$root.$dialog = dialog
+          $scope.$root.$compile=$compile;
+          $scope.$ajax = $ajax;
+          if(window.onInit){
+            window.onInit($scope);
+          }
+        }])
+    </script>
+
+</body>
+</html>
+
+

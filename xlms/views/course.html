@@ -1,0 +1,109 @@
+<%inherit file="base.html"/>
+<%block name="header_script">
+
+</%block>
+<div class="content-wrapper main-container" id="content">
+    <main id="main" aria-label="Content" tabindex="-1">
+        <section class="home">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding:0px !important;overflow-y:auto;" id="left">
+                    <ul  class="list-group">
+                        <li class="list-group-item" ng-repeat="p in courseOutline" ng-click="$root.doSetData(p);$event.stopPropagation();">
+                            {{p.display_name}}
+                            <ul class="list-group" id="demo">
+                                <li class="list-group-item" ng-repeat="x in p.children" ng-click="$root.doSetData(x);$event.stopPropagation();">
+                                    {{x.display_name}}
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="padding:0px !important" id="right">
+                    <div id="lms-contenxt">
+
+                    </div>
+
+                    <!--<iframe src="{{data.lms_web_url}}"></iframe>-->
+                    <!--<iframe src="{{data.student_view_url}}" style="width:100%;min-height:1600px" width="100%"></iframe>-->
+                    <!--{{data}}-->
+                    <!--<div ng-repeat="p in data" class="container">-->
+                        <!--{{p}}-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+
+
+        </section>
+    </main>
+</div>
+<script>
+    function onInit(scope){
+
+        scope.courseOutline=${to_json(outline.children)};
+
+        scope.$applyAsync();
+        scope.data={}
+        scope.cIframe = undefined;
+        scope.$root.doSetData=function(x){
+            if(scope.cIframe) {
+                $(scope.cIframe).remove();
+            }
+            scope.data=x;
+            var iframe = document.createElement('iframe');
+            scope.cIframe = iframe;
+            var mask = $("<div class=\"mask\"></div>").appendTo("body");
+            iframe.onload = function() {
+                var x= iframe;
+                //$(iframe.contentDocument.body).css({"border":"solid 4px red"})
+                //iframe.style.height =(iframe.contentDocument.body.offsetHeight + 60)+'px';
+                iframe.style.width ="100%"
+                //alert('myframe is loaded');
+                mask.remove();
+                $(iframe.contentDocument).ready(function(){
+                    $(iframe.contentDocument).find("#course-content").css({
+                        "width":"100%",
+                        "float":"left",
+
+                    });
+                    if ($(iframe.contentDocument).find(".sequence-bottom").length>1){
+                        $($(iframe.contentDocument).find(".sequence-bottom")[0]).remove();
+                    }
+
+                })
+            }; // before setting 'src'
+            iframe.src = scope.data.student_view_url;
+            //iframe.src="http://localhost:8000/courses/course-v1:T+A001+B002/jump_to/block-v1:T+A001+B002+type@problem+block@45d56a33c6104132b0eafb7012967b0d"&ndash;&gt;
+            $(iframe).css({
+                width:"100%",
+                //overflow:"hidden",
+                "float":"left"
+            });
+            $(iframe).css({
+                "max-height":($(window).height()-80)+"px",
+                "min-height":($(window).height()-80)+"px",
+            })
+            $("body").css({
+                "overflow-y":"hidden"
+            });
+            $(iframe).attr("frameBorder","0")
+            <!--$("#lms-contenxt").empty();-->
+            $(iframe).appendTo("#lms-contenxt");
+            scope.$applyAsync();
+
+
+        }
+        scope.$root.doSetData(scope.courseOutline[0]);
+    }
+    $(document).ready(function(){
+        $("#left").css({
+                "max-height":($(window).height()-80)+"px",
+                //"border":"solid 4px red",
+                "overflow-y":"auto"
+            });
+        $("#right").css({
+                "max-height":($(window).height()-80)+"px"
+            });
+    });
+</script>

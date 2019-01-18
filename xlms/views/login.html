@@ -1,0 +1,63 @@
+<%inherit file="base_lms.html"/>
+<%block name="title">
+${_>"Login"}
+</%block>
+<div class="container-fluid main-container" style="max-width:260px">
+        <form action="${appUrl}/login?" method="post" style="min-width:350px">
+            <fieldset>
+                <legend>
+                    ${_>"Login"}&nbsp;${_>"or"} <a href="/register">${_>"register new account"}</a> 
+                    
+                </legend>
+                <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token.__str__()}"/>
+                    <input type="hidden" value="{{ret_url}}" name="next"/>
+                     <form-layout xs-cols="12" md-cols="6,6" sm-cols="6,6" lg-cols="6,6" >
+                        <form-template>
+                            <div>
+                                <lable>${_>"Username or Email"}</lable><input type="text" placeholder="${_>'Enter your Username or Email'}" name="username">
+                                <lable>${_>"Password"}</lable><input type="password" placeholder="${_>'Enter password'}" name="password">
+                            </div>
+                            <div>
+                                <div class="btn-toolbar pull-right" role="toolbar" span="12">
+                                    <div class="btn-group">
+        
+                                    </div>
+                                    <div class="btn-group">
+        
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-primary">${_>"Login"}</button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </form-template>
+                    </form-layout>
+            </fieldset>
+           
+        </form>
+</div>
+<%block name="angular">
+    <script name="angular">
+        var mdl = angular.module("lms",["q-ui"]);
+        var ctrl =mdl.controller("lms",["$compile","$ajax","$scope",function($compile,$ajax,$scope){
+            $scope.ret_url="";
+           if( window.location.href.indexOf('?')>-1){
+
+            $scope.ret_url=window.location.href.split('?')[1]
+           }
+
+          $scope.$root.$dialog = dialog
+          $scope.$root.$compile=$compile;
+          $scope.$ajax = $ajax;
+          if(window.onInit){
+            window.onInit($scope);
+          }
+          $("body").css({
+            height:$(window).height()
+          });
+
+        }])
+    </script>
+
+</%block>

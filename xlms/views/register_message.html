@@ -1,0 +1,107 @@
+<%inherit file="base_lms.html"/>
+<%block name="title">
+${_>"Register message"}
+</%block>
+<div class="container"></div>
+<div class="container-fluid main-container" style="max-width: 600px">
+    <form action="/register" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token.__str__()}"/>
+            <fieldset>
+                    <legend>${_>"Register new account"} ${_>"or"} <a href="/login">${_>"Login"}</a> </legend>
+                        <form-layout xs-cols="12" md-cols="4,8" sm-cols="4,8" lg-cols="4,8" >
+                                <form-template>
+                                    <div>
+                                        <lable>${_>"Username"}</lable><input type="text" placeholder="${_>'Enter your Username'}" name="username" ng-model="data.username"  ng-change="$serverResponse=undefined">
+                                        <div ng-if="$errors.errors.check_username" span="12">
+                                            <p class="pull-right">${_>"Username contains invalid character. The username must contains:text, number, '_', or '-' "}</p>
+                                        </div>
+                                        <div ng-if="$serverResponse.error_type=='user_is_existing'" span="12">
+                                            <p class="pull-right">${_>"username is existing"}</p>
+                                        </div>
+                                        <lable>${_>"Password"}</lable><input type="password" placeholder="${_>'Enter password'}" name="password" ng-model="data.password">
+                                        <lable>${_>"Confirm password"}</lable><input type="password" placeholder="${_>'Enter confirm password'}" name="confirm_password" ng-model="data.confirm_password">
+                                        <div ng-if="data.confirm_password && data.confirm_password!=data.password" span="12" in-init="$errors.errors.check_p=1">
+                                            <p class="pull-right">${_>"Password and confirm password is not match"}</p>
+                                        </div>
+                                        <lable>${_>"Email"}</lable><input type="text" placeholder="${_>'Enter email'}" name="email"  ng-model="data.email" ng-change="$serverResponse=undefined">
+                                        <div ng-if="$errors.errors.check_email" span="12">
+                                            <p class="pull-right">${_>"Invalid email"}</p>
+                                        </div>
+                                        <div ng-if="$serverResponse.error_type=='email_is_existing'" span="12">
+                                                <p class="pull-right">${_>"Email is existing"}</p>
+                                        </div>
+                                        <lable>${_>"First name"}</lable><input type="text" placeholder="${_>'Enter firstname'}" name="firstname"  ng-model="data.firstname" >
+                                        <lable>${_>"Last name"}</lable><input type="text" placeholder="${_>'Enter lastname'}" name="lastname" ng-model="data.lastname">
+                                    </div>
+                                    <div>
+                                           
+                                        <q-require ng-model="data.username"></q-require>
+                                        <q-require ng-model="data.password"></q-require>
+                                        <q-require ng-model="data.confirm_password"></q-require>
+                                        <q-require ng-model="data.email"></q-require>
+                                        <q-require ng-model="data.firstname"></q-require>
+                                        <q-require ng-model="data.lastname"></q-require>
+                                        <q-regex ng-model="data.username" regex="^[a-z0-9_-]+$" data-id="check_username">
+                                        </q-regex>
+                                        <q-regex ng-model="data.email" regex="^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$"  data-id="check_email"></q-regex>
+                                        <div span="12">
+                                            <div ng-if="$errors.errors.check_username">
+                                                ${_>"Username contains invalid character. The username must contains:text, number, '_', or '-' "}
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div span="12">
+                                                <div class="g-recaptcha pull-right" data-sitekey="6LegwIoUAAAAAFekj8i2UqNLfBAb9sMCKfSC4H9Y"></div>
+
+                                        </div>
+                                            
+                                    </div>
+                                    <div>
+                                        <div class="btn-toolbar pull-right" role="toolbar" span="12">
+                                            <div class="btn-group">
+            
+                                            </div>
+                                            <div class="btn-group">
+            
+                                            </div>
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-primary" ng-disabled="$errors.count()>0">${_>"Reister new account"}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                </form-template>
+                        </form-layout>
+                </fieldset>
+    </form>
+    
+         
+</div>
+<%block name="angular">
+    <script name="angular">
+        var mdl = angular.module("lms",["q-ui"]);
+        var ctrl =mdl.controller("lms",["$compile","$ajax","$scope",function($compile,$ajax,$scope){
+            $scope.$serverResponse= ${to_json(ng_response)};
+            $scope.data = $scope.$serverResponse.data;
+            $scope.ret_url="";
+           if( window.location.href.indexOf('?')>-1){
+
+            $scope.ret_url=window.location.href.split('?')[1]
+           }
+
+          $scope.$root.$dialog = dialog
+          $scope.$root.$compile=$compile;
+          $scope.$ajax = $ajax;
+          if(window.onInit){
+            window.onInit($scope);
+          }
+          $("body").css({
+            height:$(window).height()
+          });
+
+        }])
+    </script>
+
+</%block>

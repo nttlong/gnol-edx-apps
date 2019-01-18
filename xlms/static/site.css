@@ -1,0 +1,32 @@
+div.mask{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+    background-image:url(images/loading-mask.gif);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+
+}
+.form-element{
+      padding:4px
+ }
+ .course-outline ol.block-tree.accordion li.outline-item.section input[type="submit"], input[type="button"], button, .button {
+    color:red !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+ }
+ .course-outline ol.block-tree.accordion li.outline-item.section
+ .course-outline ol.block-tree.accordion li.outline-item.section input[type="submit"], input[type="button"], button, .button {
+    color:#000 !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    padding:5px !important;
+ }
+ /* .btn-primary:hover, button.section-name.accordion-trigger:hover, button.subsection-text.accordion-trigger:hover {
+    border:solid 1px #dcdcdc !important;
+    background:none !important;
+    padding:4px !important;
+ } */
