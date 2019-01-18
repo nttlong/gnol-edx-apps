@@ -47,21 +47,21 @@ angularDefine(function(mdl){
             };
         }
         function compile(scope, scripts, content,url) {
-            
+
             var subScope = scope.$new(true, scope);
-            
+
             var $ele = $("<div>" + content + "</div>");
             subScope.$element = $ele.children();
             $compile($ele.contents())(subScope);
             subScope.$applyAsync();
-    
+
             return {
                 scope:subScope,
                 run:function(){
                     if (scripts && (scripts.length > 0)) {
                         for (var i = 0; i < scripts.length; i++) {
                             try {
-                            
+
                                 var fn = Function("var ret=" + scripts[i] + ";return ret")();
                                 fn(subScope);
                             }
@@ -75,8 +75,8 @@ angularDefine(function(mdl){
                         }
                     }
                 }
-    
-            } 
+
+            }
         }
         return {
             restrict: "ACE",
@@ -98,7 +98,7 @@ angularDefine(function(mdl){
                                         retObj.run();
                                         retObj.run=undefined;
                                     },50);
-                                    
+
                                 }
                                 setTimeout(watch, 500);
                             }
@@ -109,7 +109,32 @@ angularDefine(function(mdl){
             }
         }
     }]);
-    mdl.directive("qRequire",["$parse",function($parse){
+    mdl.service("$errorWatcher",[function(){
+        function instance(){
+            this.length=0;
+            this.errors={}
+        }
+        instance.prototype.count=function(){
+            var keys=Object.keys(this.errors);
+            var ret=0;
+            for(var i=0;i<keys.length;i++){
+                if(this.errors[keys[i]]!==undefined){
+                    ret++;
+                }
+            }
+            return ret;
+        }
+        instance.prototype.add=function(id,msg){
+            this.errors[id]={
+                id:id,
+                message:msg
+            }
+        }
+        return function(){
+            return new instance();
+        }
+    }]);
+    mdl.directive("qRequire",["$parse","$errorWatcher",function($parse,$errorWatcher){
         return {
             restrict:"ECA",
             replace:true,
@@ -125,10 +150,8 @@ angularDefine(function(mdl){
                 var data={
                     id:attr.id||mdl.$$$id
                 }
-                var $errors=scope.$eval("$errors")||{
-                    length:0,
-                    errors:{}
-                };  
+                var $errors=scope.$eval("$errors")||$errorWatcher();
+                $parse("$errors").assign(scope,$errors);
                 var x= scope.$eval(attr.ngModel);
                 if(angular.isUndefined(x) || (n=="")){
                     data.message=ele.find("#msg").html();
@@ -136,34 +159,31 @@ angularDefine(function(mdl){
                         $errors.length--;
                         $errors.errors[data.id]=undefined;
                     }
-                    
+
                 }
                 scope.$watch(attr.ngModel,function(n,o){
-                    var $errors=scope.$eval("$errors")||{
-                        length:0,
-                        errors:{}
-                    };  
+                    var $errors=scope.$eval("$errors")||$errorWatcher();
                     if(angular.isDefined(n) && (n!="") && (n!=o)){
                         if($errors.length>0 && $errors.errors[data.id]){
                             $errors.length--;
                             $errors.errors[data.id]=undefined;
                         }
-                        
+
                     }
                     else {
-                        
+
                         data.message=ele.find("#msg").html();
                         $errors.length++;
                         $errors.errors[data.id]=data;
-                        
+
                     }
-                    $parse("$errors").assign(scope,$errors);
+
                         scope.$applyAsync();
                 })
             }
         }
     }]);
-    mdl.directive("qRegex",["$parse",function($parse){
+    mdl.directive("qRegex",["$parse","$errorWatcher",function($parse,$errorWatcher){
         return {
             restrict:"ECA",
             replace:true,
@@ -179,12 +199,10 @@ angularDefine(function(mdl){
                 var data={
                     id:attr.id||mdl.$$$id
                 }
-                  
+
                 scope.$watch(attr.ngModel,function(n,o){
-                    var $errors=scope.$eval("$errors")||{
-                        length:0,
-                        errors:{}
-                    };  
+                    var $errors=scope.$eval("$errors")||$errorWatcher();
+                    $parse("$errors").assign(scope,$errors);
                     if(angular.isDefined(n) && (n!="") && (n!=o)){
                         var reg = new RegExp(attr.regex);
                         var r=reg.exec(n)
@@ -198,21 +216,21 @@ angularDefine(function(mdl){
                                     $errors.length--;
                                     $errors.errors[data.id]=undefined;
                                 }
-                                
-                                
+
+
                             }
-                            
-                            $parse("$errors").assign(scope,$errors);
+
+
                             scope.$applyAsync();
                     }
-                   
+
 
                 })
             }
         }
     }]);
     //angular.module('imageupload', [])
-    
+
 //        ___bootstrapUI___.service("$ajax",[function(){
 //        var instance={
 //            onBeforeCall:undefined,
